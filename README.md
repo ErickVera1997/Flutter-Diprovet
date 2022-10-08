@@ -1,16 +1,29 @@
-# flutter_diprovet_cliente
+# Flutter-Diprovet-User
 
-A new Flutter project.
+A new Flutter project with Flutter, Provider as a state manager.
+Firebase: Authentication and Realtime Database
 
-## Getting Started
+# Screens
 
-This project is a starting point for a Flutter application.
+- <h2>Register - Login (Users)</h2>
 
-A few resources to get you started if this is your first Flutter project:
+<p>
+<img src="https://i.ibb.co/z6pmbf8/Screenshot-1665202857.png" width="250" height="500">
+<img src="https://i.ibb.co/RQBYZT6/Screenshot-1628808405.png" width="250" height="500">  
+</p>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- <h2>Register - Main Screen - Upgrade (Products)</h2>
+<p>
+<img src="https://i.ibb.co/G0KSfQ4/Screenshot-1629246482.png" width="250" height="500">
+<img src="https://i.ibb.co/wd73XZM/Screenshot-1629246477.png" width="250" height="500">
+ <img src="https://i.ibb.co/3hXjG4n/Screenshot-1642958032.png" width="250" height="500">
+</p>
+
+# Get packages
+
+- flutter pub get
+
+# Run app
+
+- flutter run
