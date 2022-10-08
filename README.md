@@ -1,11 +1,11 @@
 # Flutter-Diprovet-User
 
 A new Flutter project with Flutter, Provider as a state manager.
--Firebase: Authentication and Realtime Database
+- Firebase: Authentication and Realtime Database
 
 # Screens
 
-- <h2>Sections                 - Products - Products Details</h2>
+- <h2>Sections - Products - Products Details</h2>
 
 <p>
 <img src="https://i.ibb.co/z6pmbf8/Screenshot-1665202857.png" width="250" height="500">
