@@ -4,9 +4,9 @@ import 'package:flutter_diprovet_cliente/screens/home_temp.dart';
 import 'package:flutter_diprovet_cliente/screens/login_page.dart';
 import 'package:flutter_diprovet_cliente/screens/products_page.dart';
 import 'package:flutter_diprovet_cliente/screens/register_page.dart';
-import 'package:flutter_diprovet_cliente/screens/shoping_page.dart';
+import 'package:flutter_diprovet_cliente/screens/shopping_page.dart';
 import 'package:flutter_diprovet_cliente/services/auth_service.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
 import 'package:provider/provider.dart';
@@ -30,10 +30,9 @@ class MyApp extends StatelessWidget {
           'routeHome': (_) => const HomePage(),
           'routeHomeTemp': (_) => const TempPage(),
           'routeProducts': (_) => const ProductsPage(),
-          'routeShoping': (_) => const ShopingPage(),
+          'routeShopping': (_) => const ShoppingPage(),
           'routeLogin': (_) => const LoginPage(),
-          'routeRegister': (_) => RegisterPage(),
-          //'routeDetalle': (_) =>  DetallePage(),
+          'routeRegister': (_) => const RegisterPage(),
         },
       ),
     );

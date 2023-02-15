@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/models/shopingdetalle.dart';
+import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
 
 class DetailService extends ChangeNotifier {
   List<Detail> details = [];

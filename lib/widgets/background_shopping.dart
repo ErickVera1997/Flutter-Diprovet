@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart' show SizedBox, Row;
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 
-fondoShoping() => Row(
+backgroundShopping() => Row(
       children: [
-        fondo(),
+        background(),
         const SizedBox(width: 1),
-        fondo(),
+        background(),
         const SizedBox(width: 1),
-        fondo(),
+        background(),
       ],
     );

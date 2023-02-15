@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       body: Stack(
         children: [
-          fondo(),
+          background(),
           const _CardSuperior(),
         ],
       ),
@@ -42,7 +42,7 @@ class _CardSuperior extends StatelessWidget {
             height: 650,
             child: ListView.separated(
               itemCount: newService.length,
-              itemBuilder: (context, index) => Tarjeta(newService[index]),
+              itemBuilder: (context, index) => _CardHome(newService[index]),
               separatorBuilder: (_, __) => const SizedBox(height: 10),
             ),
           ),
@@ -64,16 +64,16 @@ icons(BuildContext context) {
           size: 30,
           color: Colors.black12,
         ),
-        onPressed: () => Navigator.pushNamed(context, 'routeShoping'),
+        onPressed: () => Navigator.pushNamed(context, 'routeShopping'),
       ),
     ],
   );
 }
 
-class Tarjeta extends StatelessWidget {
-  final Category categoria;
+class _CardHome extends StatelessWidget {
+  final Category category;
 
-  const Tarjeta(this.categoria);
+  const _CardHome(this.category);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class Tarjeta extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          fondoCard(),
+          _backgroundCard(),
           Row(
             children: [
               const SizedBox(width: 25),
@@ -97,7 +97,7 @@ class Tarjeta extends StatelessWidget {
                 ),
                 child: ClipOval(
                   child: Image.asset(
-                    categoria.path,
+                    category.path,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -112,7 +112,7 @@ class Tarjeta extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      categoria.name,
+                      category.name,
                       style: const TextStyle(
                         fontSize: 20,
                         letterSpacing: 1,
@@ -137,7 +137,7 @@ class Tarjeta extends StatelessWidget {
                   icon: const Icon(Icons.chevron_right_outlined),
                   color: Colors.white,
                   onPressed: () {
-                    newsService.selectedCategory = categoria.name;
+                    newsService.selectedCategory = category.name;
                     Navigator.pushNamed(context, 'routeProducts');
                   },
                 ),
@@ -150,7 +150,7 @@ class Tarjeta extends StatelessWidget {
   }
 }
 
-fondoCard() {
+_backgroundCard() {
   return Container(
     width: 280,
     height: 110,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Superior extends StatelessWidget {
-  final String bottomLeft;
-  final String bottomRigth;
+  final String buttonLeft;
+  final String buttonRight;
   final String pageName;
 
   const Superior(
-    this.bottomLeft,
-    this.bottomRigth,
+    this.buttonLeft,
+    this.buttonRight,
     this.pageName,
   );
 
@@ -23,7 +23,7 @@ class Superior extends StatelessWidget {
               IconButton(
                 icon:
                     const Icon(Icons.arrow_back, color: Colors.white, size: 40),
-                onPressed: () => Navigator.pushNamed(context, bottomLeft),
+                onPressed: () => Navigator.pushNamed(context, buttonLeft),
               ),
               const SizedBox(width: 250),
               IconButton(
@@ -32,7 +32,7 @@ class Superior extends StatelessWidget {
                   size: 30,
                   color: Colors.black12,
                 ),
-                onPressed: () => Navigator.pushNamed(context, bottomRigth),
+                onPressed: () => Navigator.pushNamed(context, buttonRight),
               ),
             ],
           ),
@@ -47,7 +47,7 @@ class Superior extends StatelessWidget {
             ),
           ),
           const Text(
-            'DIPROVET ',
+            'DIPROVET',
             style: TextStyle(
               fontSize: 20,
               color: Colors.white,

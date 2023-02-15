@@ -48,8 +48,6 @@ class TempPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //const SizedBox(width: 50),
-
                   Container(
                     width: 25,
                     height: 25,
