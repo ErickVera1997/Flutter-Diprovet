@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +10,7 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _fondo = fondo();
+    final _background = background();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -18,12 +18,12 @@ class ProductsPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              _fondo,
+              _background,
               const SizedBox(width: 1),
-              _fondo,
+              _background,
             ],
           ),
-          MenuCenter(),
+          const MenuCenter(),
         ],
       ),
     );
@@ -31,6 +31,8 @@ class ProductsPage extends StatelessWidget {
 }
 
 class MenuCenter extends StatelessWidget {
+  const MenuCenter({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<ProductsService>(context).filteredProducts;
@@ -41,7 +43,7 @@ class MenuCenter extends StatelessWidget {
         children: [
           const Superior(
             'routeHome',
-            'routeShoping',
+            'routeShopping',
             'Productos',
           ),
           const SizedBox(height: 30),
@@ -50,7 +52,7 @@ class MenuCenter extends StatelessWidget {
             height: 500,
             child: ListView.separated(
               itemCount: products.length,
-              itemBuilder: (context, index) => Tarjeta(products[index]),
+              itemBuilder: (context, index) => _CardProduct(products[index]),
               separatorBuilder: (_, __) => const SizedBox(height: 10),
             ),
           ),
@@ -60,8 +62,8 @@ class MenuCenter extends StatelessWidget {
   }
 }
 
-class Tarjeta extends StatelessWidget {
-  const Tarjeta(this.product);
+class _CardProduct extends StatelessWidget {
+  const _CardProduct(this.product);
 
   final Product product;
 
@@ -70,12 +72,11 @@ class Tarjeta extends StatelessWidget {
     return SizedBox(
       height: 140,
       width: 320,
-      //color: Colors.white,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
           const SizedBox(width: 30),
-          _fondoTarjeta(),
+          _backgroundCard(),
           Row(
             children: [
               const SizedBox(width: 10),
@@ -87,7 +88,7 @@ class Tarjeta extends StatelessWidget {
                 ),
                 //color: Colors.grey,
                 child: GestureDetector(
-                  onTap: () => _secondDetallePage(context),
+                  onTap: () => _secondDetailPage(context),
                   child: ClipOval(
                     child: FadeInImage(
                       placeholder: const AssetImage('assets/jar-loading.gif'),
@@ -101,7 +102,6 @@ class Tarjeta extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 100,
-                //color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -165,7 +165,7 @@ class Tarjeta extends StatelessWidget {
     );
   }
 
-  void _secondDetallePage(BuildContext context) {
+  void _secondDetailPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) => Scaffold(
@@ -313,7 +313,7 @@ class Tarjeta extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        product.especie,
+                        product.specie,
                         textAlign: TextAlign.justify,
                         style: const TextStyle(fontSize: 16),
                       ),
@@ -345,7 +345,7 @@ class Tarjeta extends StatelessWidget {
   }
 }
 
-_fondoTarjeta() => Container(
+_backgroundCard() => Container(
       width: 320,
       height: 230,
       decoration: BoxDecoration(

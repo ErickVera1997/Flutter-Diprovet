@@ -3,7 +3,7 @@ import 'dart:convert';
 class Product {
   Product({
     required this.available,
-    required this.especie,
+    required this.specie,
     required this.name,
     required this.category,
     required this.picture,
@@ -15,7 +15,7 @@ class Product {
   });
 
   bool available;
-  String especie;
+  String specie;
   int share;
   String name;
   String category;
@@ -31,7 +31,7 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         available: json['available'],
-        especie: json['especie'],
+        specie: json['specie'],
         name: json['name'],
         category: json['category'],
         picture: json['picture'],
@@ -43,7 +43,7 @@ class Product {
 
   Map<String, dynamic> toMap() => {
         'available': available,
-        'especie': especie,
+        'specie': specie,
         'name': name,
         'category': category,
         'picture': picture,
@@ -55,7 +55,7 @@ class Product {
 
   Product copy() => Product(
         available: available,
-        especie: especie,
+        specie: specie,
         name: name,
         category: category,
         picture: picture,

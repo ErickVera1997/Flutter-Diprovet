@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/shopingdetalle.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
+import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class ShopingPage extends StatelessWidget {
-  const ShopingPage({Key? key}) : super(key: key);
+class ShoppingPage extends StatelessWidget {
+  const ShoppingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          fondoShoping(),
-          const MenuShoping(),
+          backgroundShopping(),
+          const MenuShopping(),
         ],
       ),
-      floatingActionButton: buttomShoping(context),
+      floatingActionButton: buttonShopping(context),
     );
   }
 }
 
-class MenuShoping extends StatelessWidget {
-  const MenuShoping({Key? key}) : super(key: key);
+class MenuShopping extends StatelessWidget {
+  const MenuShopping({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class MenuShoping extends StatelessWidget {
         children: [
           const Superior(
             'routeProducts',
-            'routeShoping',
-            'Shoping',
+            'routeShopping',
+            'Shopping',
           ),
           const SizedBox(height: 30),
           SizedBox(
@@ -42,7 +42,7 @@ class MenuShoping extends StatelessWidget {
             height: 500,
             child: ListView.separated(
               itemCount: details.length,
-              itemBuilder: (context, index) => Tarjeta(details[index]),
+              itemBuilder: (context, index) => _CardShopping(details[index]),
               separatorBuilder: (_, __) => const SizedBox(height: 10),
             ),
           ),
@@ -52,8 +52,8 @@ class MenuShoping extends StatelessWidget {
   }
 }
 
-class Tarjeta extends StatelessWidget {
-  const Tarjeta(this.detail);
+class _CardShopping extends StatelessWidget {
+  const _CardShopping(this.detail, {Key? key}) : super(key: key);
 
   final Detail detail;
 
@@ -62,12 +62,11 @@ class Tarjeta extends StatelessWidget {
     return SizedBox(
       height: 140,
       width: 320,
-      //color: Colors.white,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
           const SizedBox(width: 30),
-          _fondoTarjeta(),
+          _backgroundCard(),
           Positioned(
             bottom: -5,
             right: 90,
@@ -98,7 +97,6 @@ class Tarjeta extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 100,
-                //color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -145,7 +143,7 @@ class Tarjeta extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.grey[100],
                 ),
-                child: Contador(
+                child: Counter(
                   amount: detail.amount,
                   onIncrement: () =>
                       Provider.of<DetailService>(context, listen: false)
@@ -166,8 +164,8 @@ class Tarjeta extends StatelessWidget {
   }
 }
 
-class Contador extends StatelessWidget {
-  const Contador({
+class Counter extends StatelessWidget {
+  const Counter({
     Key? key,
     required this.amount,
     required this.onIncrement,
@@ -202,7 +200,7 @@ class Contador extends StatelessWidget {
   }
 }
 
-_fondoTarjeta() {
+_backgroundCard() {
   return Container(
     width: 320,
     height: 130,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-fondo() {
+background() {
   return Container(
     height: double.infinity,
     width: 135,
