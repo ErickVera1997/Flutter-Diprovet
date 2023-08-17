@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Superior extends StatelessWidget {
-  final String buttonLeft;
-  final String buttonRight;
+  final String bottomLeft;
+  final String bottomRight;
   final String pageName;
 
   const Superior(
-    this.buttonLeft,
-    this.buttonRight,
-    this.pageName,
-  );
+    this.bottomLeft,
+    this.bottomRight,
+    this.pageName, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,12 @@ class Superior extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon:
-                    const Icon(Icons.arrow_back, color: Colors.white, size: 40),
-                onPressed: () => Navigator.pushNamed(context, buttonLeft),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                onPressed: () => Navigator.pushNamed(context, bottomLeft),
               ),
               const SizedBox(width: 250),
               IconButton(
@@ -32,7 +36,7 @@ class Superior extends StatelessWidget {
                   size: 30,
                   color: Colors.black12,
                 ),
-                onPressed: () => Navigator.pushNamed(context, buttonRight),
+                onPressed: () => Navigator.pushNamed(context, bottomRight),
               ),
             ],
           ),

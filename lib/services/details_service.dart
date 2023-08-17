@@ -8,10 +8,10 @@ class DetailService extends ChangeNotifier {
   addProduct(Product product) {
     try {
       final detail =
-          details.firstWhere((element) => element.product.id == product.id);
-      final detailUpdate = detail.copyWith(amount: detail.amount + 1);
+          details.firstWhere((element) => element.product?.id == product.id);
+      final detailUpdate = detail.copyWith(amount: detail.amount! + 1);
 
-      details.removeWhere((element) => element.product.id == product.id);
+      details.removeWhere((element) => element.product?.id == product.id);
       details.add(detailUpdate);
     } catch (e) {
       details.add(
@@ -26,29 +26,31 @@ class DetailService extends ChangeNotifier {
 
   incrementAmount(Detail detail) {
     final amount = details
-        .firstWhere((element) => element.product.id == detail.product.id);
-    final amountUpdate = amount.copyWith(amount: detail.amount + 1);
+        .firstWhere((element) => element.product?.id == detail.product?.id);
+    final amountUpdate = amount.copyWith(amount: detail.amount! + 1);
     final index = details
-        .indexWhere((element) => element.product.id == detail.product.id);
-    details.removeWhere((element) => element.product.id == detail.product.id);
+        .indexWhere((element) => element.product?.id == detail.product?.id);
+    details.removeWhere((element) => element.product?.id == detail.product?.id);
     details.insert(index, amountUpdate);
     notifyListeners();
   }
 
   decrementAmount(Detail detail) {
-    final amount = details
-        .firstWhere((element) => element.product.id == detail.product.id);
-    final amountUpdate = amount.copyWith(amount: detail.amount - 1);
+    final amount = details.firstWhere(
+      (element) => element.product?.id == detail.product?.id,
+      orElse: () => Detail(0, Product()),
+    );
+    final amountUpdate = amount.copyWith(amount: detail.amount! - 1);
     final index = details
-        .indexWhere((element) => element.product.id == detail.product.id);
-    details.removeWhere((element) => element.product.id == detail.product.id);
+        .indexWhere((element) => element.product?.id == detail.product?.id);
+    details.removeWhere((element) => element.product?.id == detail.product?.id);
     details.insert(index, amountUpdate);
     notifyListeners();
   }
 
   removeProduct(Product product) {
     final index =
-        details.indexWhere((element) => element.product.id == product.id);
+        details.indexWhere((element) => element.product?.id == product.id);
     details.removeAt(index);
     notifyListeners();
   }

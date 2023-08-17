@@ -1,8 +1,8 @@
 import 'package:flutter_diprovet_cliente/models/product.dart';
 
 class Detail {
-  final int amount;
-  final Product product;
+  final int? amount;
+  final Product? product;
 
   Detail copyWith({
     int? amount,
@@ -16,5 +16,5 @@ class Detail {
 
   Detail(this.amount, this.product);
 
-  double get total => product.price * amount;
+  double get total => product!.price! * amount!;
 }

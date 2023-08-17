@@ -176,7 +176,7 @@ class List extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
-          details.product.name,
+          details.product!.name!,
           style: const TextStyle(color: Colors.amber),
         ),
         const SizedBox(
@@ -186,7 +186,7 @@ class List extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text(details.product.price.toStringAsFixed(2)),
+        Text(details.product!.price!.toStringAsFixed(2)),
         const SizedBox(
           width: 20,
         ),
@@ -196,33 +196,4 @@ class List extends StatelessWidget {
       ],
     );
   }
-}
-
-buttonShopping(BuildContext context) {
-  return Container(
-    height: 80,
-    width: 385,
-    decoration: const BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.all(Radius.circular(20)),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'Nota de Pedido DIPROVET',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(width: 130),
-        GestureDetector(
-          onTap: () => secondDetailPage(context),
-          child: Icon(
-            Icons.expand_less,
-            size: 30,
-            color: Colors.deepOrange[400],
-          ),
-        ),
-      ],
-    ),
-  );
 }

@@ -13,9 +13,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Stack(
-        children: [
-          background(),
-          const _CardSuperior(),
+        children: const [
+          BackgroundYellow(),
+          _CardSuperior(),
         ],
       ),
     );
@@ -35,7 +35,7 @@ class _CardSuperior extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          icons(context),
+          _Icons(),
           const SizedBox(height: 30),
           SizedBox(
             width: 390,
@@ -52,28 +52,31 @@ class _CardSuperior extends StatelessWidget {
   }
 }
 
-icons(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      const Icon(Icons.apps, size: 40, color: Colors.white),
-      const SizedBox(width: 240),
-      IconButton(
-        icon: const Icon(
-          Icons.add_shopping_cart_rounded,
-          size: 30,
-          color: Colors.black12,
+class _Icons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.apps, size: 40, color: Colors.white),
+        const SizedBox(width: 240),
+        IconButton(
+          icon: const Icon(
+            Icons.add_shopping_cart_rounded,
+            size: 30,
+            color: Colors.black12,
+          ),
+          onPressed: () => Navigator.pushNamed(context, 'routeShopping'),
         ),
-        onPressed: () => Navigator.pushNamed(context, 'routeShopping'),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class _CardHome extends StatelessWidget {
   final Category category;
 
-  const _CardHome(this.category);
+  const _CardHome(this.category, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +88,7 @@ class _CardHome extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          _backgroundCard(),
+          const _BackGroundWhite(),
           Row(
             children: [
               const SizedBox(width: 25),
@@ -150,13 +153,18 @@ class _CardHome extends StatelessWidget {
   }
 }
 
-_backgroundCard() {
-  return Container(
-    width: 280,
-    height: 110,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-    ),
-  );
+class _BackGroundWhite extends StatelessWidget {
+  const _BackGroundWhite();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 280,
+      height: 110,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+  }
 }
