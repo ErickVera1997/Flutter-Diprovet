@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/details_service.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);

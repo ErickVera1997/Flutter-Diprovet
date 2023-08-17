@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           'routeHome': (_) => const HomePage(),
           'routeHomeTemp': (_) => const TempPage(),
           'routeProducts': (_) => const ProductsScreen(),
-          'routeShopping': (_) => const ShoppingPage(),
+          'routeShopping': (_) => const ShoppingCardPage(),
           'routeLogin': (_) => const LoginPage(),
           'routeRegister': (_) => const RegisterPage(),
         },

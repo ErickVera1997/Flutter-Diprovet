@@ -1,28 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/shopingdetalle.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
+
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class ShopingPage extends StatelessWidget {
-  const ShopingPage({Key? key}) : super(key: key);
+import '../models/shopping_detail.dart';
+import '../services/details_service.dart';
+
+class ShoppingCardPage extends StatelessWidget {
+  const ShoppingCardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          fondoShoping(),
-          const MenuShoping(),
+        children: const [
+          ThreeBackground(),
+          _MenuShopping(),
         ],
       ),
-      floatingActionButton: buttomShoping(context),
+      floatingActionButton: const _Button(),
     );
   }
 }
 
-class MenuShoping extends StatelessWidget {
-  const MenuShoping({Key? key}) : super(key: key);
+class _Button extends StatelessWidget {
+  const _Button();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      width: 385,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Nota de Pedido DIPROVET',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 130),
+          GestureDetector(
+            onTap: () => secondDetailPage(context),
+            child: Icon(
+              Icons.expand_less,
+              size: 30,
+              color: Colors.deepOrange[400],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MenuShopping extends StatelessWidget {
+  const _MenuShopping({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +78,7 @@ class MenuShoping extends StatelessWidget {
             height: 500,
             child: ListView.separated(
               itemCount: details.length,
-              itemBuilder: (context, index) => Tarjeta(details[index]),
+              itemBuilder: (context, index) => _Card(details[index]),
               separatorBuilder: (_, __) => const SizedBox(height: 10),
             ),
           ),
@@ -52,8 +88,8 @@ class MenuShoping extends StatelessWidget {
   }
 }
 
-class Tarjeta extends StatelessWidget {
-  const Tarjeta(this.detail);
+class _Card extends StatelessWidget {
+  const _Card(this.detail);
 
   final Detail detail;
 
@@ -78,7 +114,7 @@ class Tarjeta extends StatelessWidget {
                 color: Colors.black,
               ),
               onTap: () => Provider.of<DetailService>(context, listen: false)
-                  .removeProduct(detail.product),
+                  .removeProduct(detail.product!),
             ),
           ),
           Row(
@@ -89,7 +125,7 @@ class Tarjeta extends StatelessWidget {
                 height: 110,
                 child: ClipOval(
                   child: Image.network(
-                    detail.product.picture,
+                    detail.product!.picture!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -103,7 +139,7 @@ class Tarjeta extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      detail.product.name,
+                      detail.product!.name!,
                       style: const TextStyle(fontSize: 18, letterSpacing: 2),
                     ),
                     const Text('Product Stock', style: TextStyle(fontSize: 12)),
@@ -124,11 +160,11 @@ class Tarjeta extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Text(detail.product.share.toString()),
+                        Text(detail.product!.share.toString()),
                         const Text('ml'),
                         const SizedBox(width: 50),
                         const Text('\$'),
-                        Text(detail.product.price.toString()),
+                        Text(detail.product!.price.toString()),
                         const SizedBox(
                           width: 20,
                         ),
@@ -145,13 +181,13 @@ class Tarjeta extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.grey[100],
                 ),
-                child: Contador(
-                  amount: detail.amount,
+                child: _Counter(
+                  amount: detail.amount!,
                   onIncrement: () =>
                       Provider.of<DetailService>(context, listen: false)
                           .incrementAmount(detail),
                   onDecrement: () {
-                    if (detail.amount > 0) {
+                    if (detail.amount! > 0) {
                       Provider.of<DetailService>(context, listen: false)
                           .decrementAmount(detail);
                     }
@@ -166,8 +202,8 @@ class Tarjeta extends StatelessWidget {
   }
 }
 
-class Contador extends StatelessWidget {
-  const Contador({
+class _Counter extends StatelessWidget {
+  const _Counter({
     Key? key,
     required this.amount,
     required this.onIncrement,
