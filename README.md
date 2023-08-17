@@ -1,16 +1,36 @@
-# flutter_diprovet_cliente
+# Flutter-Diprovet-User
 
-A new Flutter project.
+A new Flutter project with Flutter, Provider as a state manager.
+- Firebase: Authentication and Realtime Database
 
-## Getting Started
+# Screens
 
-This project is a starting point for a Flutter application.
+- <h2>Sections - Products - Products Details</h2>
 
-A few resources to get you started if this is your first Flutter project:
+<p>
+<img src="https://i.ibb.co/z6pmbf8/Screenshot-1665202857.png" width="250" height="500">
+<img src="https://i.ibb.co/5FnPMt0/Screenshot-1665202868.png" width="250" height="500">
+<img src="https://i.ibb.co/Nm8XSZR/Screenshot-1665202881.png" width="250" height="500"> 
+</p>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- <h2>Shoping</h2>
+<p>
+<img src="https://i.ibb.co/7nWnY69/Screenshot-1665202908.png" width="250" height="500">
+</p>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+- <h2>Products -  Order Note - Send order note (Products)</h2>
+<p>
+<img src="https://i.ibb.co/5FnPMt0/Screenshot-1665202868.png" width="250" height="500">
+<img src="https://i.ibb.co/7nWnY69/Screenshot-1665202908.png" width="250" height="500">
+<img src="https://i.ibb.co/K9SWsxB/Screenshot-1665202928.png" width="250" height="500">
+ <img src="https://i.ibb.co/Jjww29w/Screenshot-1665202935.png" width="250" height="500">
+</p>
+
+# Get packages
+
+- flutter pub get
+
+# Run app
+
+- flutter run

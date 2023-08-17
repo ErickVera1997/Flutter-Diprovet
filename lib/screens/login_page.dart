@@ -64,7 +64,6 @@ class _LoginForm extends StatelessWidget {
     final loginForm = Provider.of<LoginFormProvider>(context);
 
     return Form(
-      //mantener la referencia del key validaciones respectivas
       key: loginForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(

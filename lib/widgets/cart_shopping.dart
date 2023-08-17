@@ -2,14 +2,14 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/shopingdetalle.dart';
-import 'package:flutter_diprovet_cliente/services/detalis_service.dart';
+import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
-void secondDetallePage(BuildContext context) {
+void secondDetailPage(BuildContext context) {
   final controller = ScreenshotController();
   final product = Provider.of<DetailService>(context, listen: false);
 
@@ -74,8 +74,7 @@ void secondDetallePage(BuildContext context) {
                 height: 300,
                 child: ListView.separated(
                   itemCount: product.details.length,
-                  itemBuilder: (context, index) =>
-                      Lista(product.details[index]),
+                  itemBuilder: (context, index) => List(product.details[index]),
                   separatorBuilder: (_, __) => const SizedBox(height: 10),
                 ),
               ),
@@ -166,10 +165,10 @@ Future saveImage(Uint8List bytes) async {
   await Share.shareFiles([image.path], text: text);
 }
 
-class Lista extends StatelessWidget {
+class List extends StatelessWidget {
   final Detail details;
 
-  const Lista(this.details);
+  const List(this.details, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

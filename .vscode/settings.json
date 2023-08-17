@@ -1,3 +1,32 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cSpell.words": [
+        "autocorrect",
+        "autovalidate",
+        "calidad",
+        "Cantidad",
+        "caracteres",
+        "Categoria",
+        "Contraseña",
+        "correo",
+        "Crear",
+        "Cuenta",
+        "Descripción",
+        "destino",
+        "DIPROVET",
+        "Electrónico",
+        "Enviar",
+        "Especie",
+        "Espere",
+        "ingresado",
+        "Ingresar",
+        "Iniciar",
+        "nueva",
+        "pedido",
+        "Precio",
+        "Producto",
+        "Productos",
+        "Subtotales",
+        "tienes"
+    ]
 }
