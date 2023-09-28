@@ -38,6 +38,7 @@ class _MenuCenter extends StatelessWidget {
 
     return SafeArea(
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Superior(
@@ -46,13 +47,10 @@ class _MenuCenter extends StatelessWidget {
             'Products',
           ),
           const SizedBox(height: 30),
-          SizedBox(
-            width: 410,
-            height: 500,
-            child: ListView.separated(
+          Expanded(
+            child: ListView.builder(
               itemCount: products.length,
-              itemBuilder: (context, index) => _CardProducts(products[index]),
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              itemBuilder: (_, index) => _CardProducts(products[index]),
             ),
           ),
         ],

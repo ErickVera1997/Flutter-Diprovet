@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
 import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
 
@@ -9,7 +9,7 @@ class DetailService extends ChangeNotifier {
     try {
       final detail =
           details.firstWhere((element) => element.product?.id == product.id);
-      final detailUpdate = detail.copyWith(amount: detail.amount! + 1);
+      final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
 
       details.removeWhere((element) => element.product?.id == product.id);
       details.add(detailUpdate);
@@ -27,7 +27,7 @@ class DetailService extends ChangeNotifier {
   incrementAmount(Detail detail) {
     final amount = details
         .firstWhere((element) => element.product?.id == detail.product?.id);
-    final amountUpdate = amount.copyWith(amount: detail.amount! + 1);
+    final amountUpdate = amount.copyWith(amount: (detail.amount ?? 0) + 1);
     final index = details
         .indexWhere((element) => element.product?.id == detail.product?.id);
     details.removeWhere((element) => element.product?.id == detail.product?.id);
@@ -40,7 +40,7 @@ class DetailService extends ChangeNotifier {
       (element) => element.product?.id == detail.product?.id,
       orElse: () => Detail(0, Product()),
     );
-    final amountUpdate = amount.copyWith(amount: detail.amount! - 1);
+    final amountUpdate = amount.copyWith(amount: (detail.amount ?? 0) - 1);
     final index = details
         .indexWhere((element) => element.product?.id == detail.product?.id);
     details.removeWhere((element) => element.product?.id == detail.product?.id);

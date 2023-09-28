@@ -12,8 +12,6 @@ class ProductsService extends ChangeNotifier {
   bool isLoading = false;
   bool isSaving = true;
 
-  List<Product> shopingProducts = [];
-
   List<Category> categories = [
     Category('Desparasitante', 'assets/home/desparasitante.jpeg'),
     Category('Vitaminas', 'assets/home/vitaminas.jpeg'),

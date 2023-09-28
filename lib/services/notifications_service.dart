@@ -12,6 +12,6 @@ class NotificationsService {
       ),
     );
 
-    messengerkey.currentState!.showSnackBar(snackBar);
+    messengerkey.currentState?.showSnackBar(snackBar);
   }
 }
