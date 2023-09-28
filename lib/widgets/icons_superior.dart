@@ -30,14 +30,15 @@ class Superior extends StatelessWidget {
                 onPressed: () => Navigator.pushNamed(context, bottomLeft),
               ),
               const SizedBox(width: 250),
-              IconButton(
-                icon: const Icon(
-                  Icons.add_shopping_cart_rounded,
-                  size: 30,
-                  color: Colors.black12,
+              if (bottomRight == 'routeShopping')
+                IconButton(
+                  icon: const Icon(
+                    Icons.add_shopping_cart_rounded,
+                    size: 30,
+                    color: Colors.black12,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, bottomRight),
                 ),
-                onPressed: () => Navigator.pushNamed(context, bottomRight),
-              ),
             ],
           ),
           const SizedBox(height: 35),

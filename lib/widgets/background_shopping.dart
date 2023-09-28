@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'background_general.dart';
+import 'background_yellow.dart';
 
 class ThreeBackground extends StatelessWidget {
   const ThreeBackground({Key? key}) : super(key: key);

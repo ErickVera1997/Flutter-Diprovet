@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/shopping_detail.dart';
 import '../services/details_service.dart';
+import '../widgets/background_shopping.dart';
 
 class ShoppingCardPage extends StatelessWidget {
   const ShoppingCardPage({Key? key}) : super(key: key);
@@ -69,17 +70,14 @@ class _MenuShopping extends StatelessWidget {
         children: [
           const Superior(
             'routeProducts',
-            'routeShoping',
-            'Shoping',
+            '',
+            'Shopping',
           ),
           const SizedBox(height: 30),
-          SizedBox(
-            width: 410,
-            height: 500,
-            child: ListView.separated(
+          Expanded(
+            child: ListView.builder(
               itemCount: details.length,
               itemBuilder: (context, index) => _Card(details[index]),
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
             ),
           ),
         ],

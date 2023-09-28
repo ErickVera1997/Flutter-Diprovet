@@ -55,7 +55,12 @@ class RegisterPage extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends StatefulWidget {
+  @override
+  State<_LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<_LoginForm> {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
@@ -125,18 +130,29 @@ class _LoginForm extends StatelessWidget {
 
                     if (!loginForm.isvalidform()) return;
 
-                    loginForm.isLoading = true;
+                    // Indicar que la carga está en progreso
+                    setState(() {
+                      loginForm.isLoading = true;
+                    });
 
                     final String? errorMessage = await authService.createUser(
                       loginForm.email,
                       loginForm.password,
                     );
 
+                    // Detener la carga y navegar según corresponda
+                    setState(() {
+                      loginForm.isLoading = false;
+                    });
+
                     if (errorMessage == null) {
+                      // Esperar un tiempo para mostrar la carga (puedes ajustar el tiempo según tu preferencia)
+                      await Future.delayed(const Duration(seconds: 6));
+
+                      // Navegar a la siguiente ruta después del retraso
                       Navigator.pushReplacementNamed(context, 'routeLogin');
                     } else {
                       print(errorMessage);
-                      loginForm.isLoading = false;
                     }
                   },
           ),

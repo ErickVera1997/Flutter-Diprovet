@@ -11,6 +11,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   leading: Builder(
+      //     builder: (BuildContext context) {
+      //       return IconButton(
+      //         icon: Icon(Icons.menu), // Icono del menú
+      //         onPressed: () {
+      //           Scaffold.of(context).openDrawer(); // Abre el drawer
+      //         },
+      //       );
+      //     },
+      //   ),
+      // ),
+      drawer: _CustomDrawer(),
       backgroundColor: Colors.grey[100],
       body: Stack(
         children: const [
@@ -22,10 +35,55 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class _CustomDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.red,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Text(
+                  'Perfil',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Configuraciones',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.arrow_back,
+            ), // Icono para indicar que hay un drawer
+            title: const Text('Otra sección'),
+            onTap: () {
+              // Agregar navegación a la otra sección
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _CardSuperior extends StatelessWidget {
-  const _CardSuperior({
-    Key? key,
-  }) : super(key: key);
+  const _CardSuperior();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +95,11 @@ class _CardSuperior extends StatelessWidget {
           const SizedBox(height: 20),
           _Icons(),
           const SizedBox(height: 30),
-          SizedBox(
-            width: 390,
-            height: 650,
+          Expanded(
             child: ListView.separated(
               itemCount: newService.length,
               itemBuilder: (context, index) => _CardHome(newService[index]),
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
+              separatorBuilder: (_, __) => const SizedBox(height: 20),
             ),
           ),
         ],
@@ -58,7 +114,10 @@ class _Icons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.apps, size: 40, color: Colors.white),
+        IconButton(
+          icon: const Icon(Icons.apps, size: 40, color: Colors.white),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
         const SizedBox(width: 240),
         IconButton(
           icon: const Icon(
@@ -83,7 +142,7 @@ class _CardHome extends StatelessWidget {
     final newsService = Provider.of<ProductsService>(context, listen: false);
 
     return SizedBox(
-      height: 110,
+      height: 100,
       width: 320,
       child: Stack(
         alignment: AlignmentDirectional.center,
@@ -109,7 +168,6 @@ class _CardHome extends StatelessWidget {
               SizedBox(
                 width: 160,
                 height: 60,
-                //color: Colors.blue,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +184,7 @@ class _CardHome extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 35),
+              const SizedBox(width: 45),
               Container(
                 alignment: Alignment.center,
                 height: 50,

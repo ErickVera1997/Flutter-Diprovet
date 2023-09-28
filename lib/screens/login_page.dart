@@ -35,14 +35,15 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               TextButton(
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, 'routeRegister'),
+                onPressed: () => Navigator.pushReplacementNamed(
+                  context,
+                  'routeRegister',
+                ),
                 style: ButtonStyle(
-                  overlayColor:
-                      MaterialStateProperty.all(Colors.indigo.withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(
-                    const StadiumBorder(),
+                  overlayColor: MaterialStateProperty.all(
+                    Colors.indigo.withOpacity(0.1),
                   ),
+                  shape: MaterialStateProperty.all(const StadiumBorder()),
                 ),
                 child: const Text(
                   'Crear una nueva cuenta',
