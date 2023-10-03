@@ -99,7 +99,7 @@ class _CardSuperior extends StatelessWidget {
             child: ListView.separated(
               itemCount: newService.length,
               itemBuilder: (context, index) => _CardHome(newService[index]),
-              separatorBuilder: (_, __) => const SizedBox(height: 20),
+              separatorBuilder: (_, __) => const SizedBox(height: 30),
             ),
           ),
         ],
@@ -141,21 +141,19 @@ class _CardHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final newsService = Provider.of<ProductsService>(context, listen: false);
 
-    return SizedBox(
-      height: 100,
-      width: 320,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          const _BackGroundWhite(),
-          Row(
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        const _BackGroundWhite(),
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 40),
+          child: Row(
             children: [
-              const SizedBox(width: 25),
               Container(
-                width: 70,
-                height: 70,
+                width: 90,
+                height: 90,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(70),
+                  borderRadius: BorderRadius.circular(90),
                 ),
                 child: ClipOval(
                   child: Image.asset(
@@ -164,27 +162,18 @@ class _CardHome extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
-              SizedBox(
-                width: 160,
-                height: 60,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      category.name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.bold,
-                      ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    category.name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 8),
-                  ],
+                  ),
                 ),
               ),
-              const SizedBox(width: 45),
               Container(
                 alignment: Alignment.center,
                 height: 50,
@@ -205,8 +194,8 @@ class _CardHome extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
