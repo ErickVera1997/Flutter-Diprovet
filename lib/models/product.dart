@@ -24,15 +24,15 @@ class Product {
   String? id;
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
-        available: json['available'],
-        species: json['species'],
-        name: json['name'],
-        category: json['category'],
-        picture: json['picture'],
-        price: json['price'],
-        description: json['description'],
-        details: json['details'],
-        share: json['share'],
+        available: json['available'] ?? false,
+        species: json['specie'] ?? '',
+        name: json['name'] ?? 'Diprovet',
+        category: json['category'] ?? '',
+        picture: json['picture'] ?? '',
+        price: json['price'] ?? .0,
+        description: json['description'] ?? '',
+        details: json['details'] ?? '',
+        share: json['share'] ?? '',
       );
 
   Product copy() => Product(

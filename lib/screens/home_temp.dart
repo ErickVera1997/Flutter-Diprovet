@@ -9,19 +9,13 @@ class TempPage extends StatefulWidget {
 
 class _TempPageState extends State<TempPage> {
   bool _isButtonEnabled = true;
-  bool _isLoading = false;
 
   void _startNavigation() async {
     setState(() {
-      _isLoading = true;
       _isButtonEnabled = false;
     });
 
-    await Future.delayed(const Duration(seconds: 5));
-
-    setState(() {
-      _isLoading = false;
-    });
+    await Future.delayed(const Duration(seconds: 2));
 
     Navigator.pushNamed(context, 'routeHome');
   }
@@ -29,39 +23,17 @@ class _TempPageState extends State<TempPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrange[400],
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.deepOrange[400]!,
-                    Colors.deepOrange[800]!,
-                    Colors.deepOrange[100]!,
-                  ],
-                  stops: const [
-                    0.0,
-                    0.5,
-                    1.0,
-                  ],
-                ),
-              ),
-            ),
             Card(
-              margin: const EdgeInsets.all(40),
+              margin: const EdgeInsets.all(20),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(70)),
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(70),
-                    bottomRight: Radius.circular(70),
-                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(70)),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -83,32 +55,24 @@ class _TempPageState extends State<TempPage> {
                       ),
                       child: Image(image: AssetImage('assets/logo.jpeg')),
                     ),
-                    const SizedBox(height: 90),
+                    const SizedBox(height: 140),
                     ElevatedButton(
                       onPressed: _isButtonEnabled ? _startNavigation : null,
-                      child: _isLoading
-                          ? const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            )
-                          : const Text(
-                              'Iniciar',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                letterSpacing: 2,
-                              ),
-                            ),
+                      child: const Text(
+                        'Iniciar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          letterSpacing: 2,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(190, 50),
-                        backgroundColor:
-                            _isButtonEnabled ? Colors.transparent : Colors.grey,
-                        foregroundColor:
-                            _isButtonEnabled ? Colors.deepOrange : Colors.grey,
+                        fixedSize: const Size(240, 70),
+                        backgroundColor: Colors.amber.shade300,
                         shape: const StadiumBorder(),
                       ),
                     ),
-                    const SizedBox(height: 140),
+                    const SizedBox(height: 100),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

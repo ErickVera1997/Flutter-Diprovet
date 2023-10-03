@@ -3,7 +3,6 @@ import 'package:flutter_diprovet_cliente/models/product.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
 import '../../services/details_service.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -83,14 +82,11 @@ class _CardProducts extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                 ),
-                //color: Colors.grey,
                 child: GestureDetector(
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => _DetailScreen(
-                        product: product,
-                      ),
+                      builder: (_) => _DetailScreen(product: product),
                     ),
                   ),
                   child: ClipOval(
@@ -106,7 +102,6 @@ class _CardProducts extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 100,
-                //color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
