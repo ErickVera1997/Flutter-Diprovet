@@ -7,7 +7,7 @@ class BackgroundYellow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      width: 135,
+      width: MediaQuery.of(context).size.width * 0.32,
       color: Colors.yellow,
     );
   }

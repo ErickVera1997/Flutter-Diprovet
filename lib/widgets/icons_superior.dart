@@ -24,18 +24,18 @@ class Superior extends StatelessWidget {
               IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: Colors.black,
                   size: 40,
                 ),
                 onPressed: () => Navigator.pushNamed(context, bottomLeft),
               ),
               const SizedBox(width: 250),
-              if (bottomRight == 'routeShopping')
+              if (bottomRight == '/routeShopping')
                 IconButton(
                   icon: const Icon(
                     Icons.add_shopping_cart_rounded,
                     size: 30,
-                    color: Colors.black12,
+                    color: Colors.black,
                   ),
                   onPressed: () => Navigator.pushNamed(context, bottomRight),
                 ),
@@ -46,7 +46,7 @@ class Superior extends StatelessWidget {
             pageName,
             style: const TextStyle(
               fontSize: 40,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w700,
               letterSpacing: 5,
             ),
@@ -55,7 +55,7 @@ class Superior extends StatelessWidget {
             'DIPROVET',
             style: TextStyle(
               fontSize: 20,
-              color: Colors.white,
+              color: Colors.black,
               letterSpacing: 5,
             ),
           ),

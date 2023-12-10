@@ -10,16 +10,12 @@ class AuthBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          _PurpleBox(),
-          _HeaderIcon(),
-          child,
-        ],
-      ),
+    return Stack(
+      children: [
+        _PurpleBox(),
+        _HeaderIcon(),
+        child,
+      ],
     );
   }
 }
@@ -33,7 +29,7 @@ class _HeaderIcon extends StatelessWidget {
         margin: const EdgeInsets.only(top: 70),
         child: const Text(
           'DIPROVET',
-          style: TextStyle(fontSize: 50, color: Colors.black54),
+          style: TextStyle(fontSize: 50, color: Colors.black),
           textAlign: TextAlign.center,
         ),
       ),
@@ -49,16 +45,17 @@ class _PurpleBox extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height * 0.4,
-      decoration: _purpleBackground(),
-      child: Stack(
-        children: [
-          Positioned(child: _Bubble(), top: 90, left: 30),
-          Positioned(child: _Bubble(), top: -40, left: -30),
-          Positioned(child: _Bubble(), top: -50, right: -20),
-          Positioned(child: _Bubble(), bottom: -50, left: 10),
-          Positioned(child: _Bubble(), bottom: 90, right: 20),
-        ],
-      ),
+      color: Colors.yellow,
+      //decoration: _purpleBackground(),
+      // child: Stack(
+      //   children: [
+      //     Positioned(child: _Bubble(), top: 90, left: 30),
+      //     Positioned(child: _Bubble(), top: -40, left: -30),
+      //     Positioned(child: _Bubble(), top: -50, right: -20),
+      //     Positioned(child: _Bubble(), bottom: -50, left: 10),
+      //     Positioned(child: _Bubble(), bottom: 90, right: 20),
+      //   ],
+      // ),
     );
   }
 

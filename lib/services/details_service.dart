@@ -38,7 +38,6 @@ class DetailService extends ChangeNotifier {
   decrementAmount(Detail detail) {
     final amount = details.firstWhere(
       (element) => element.product?.id == detail.product?.id,
-      orElse: () => Detail(0, Product()),
     );
     final amountUpdate = amount.copyWith(amount: (detail.amount ?? 0) - 1);
     final index = details

@@ -13,46 +13,47 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBackground(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 250),
-              CardContainer(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      'Login',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    const SizedBox(height: 30),
-                    ChangeNotifierProvider(
-                      create: (_) => LoginFormProvider(),
-                      child: _LoginForm(),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 50),
-              TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(
-                  context,
-                  'routeRegister',
-                ),
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                    Colors.indigo.withOpacity(0.1),
+        child: Column(
+          children: [
+            const SizedBox(height: 250),
+            CardContainer(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
                   ),
-                  shape: MaterialStateProperty.all(const StadiumBorder()),
-                ),
-                child: const Text(
-                  'Crear una nueva cuenta',
-                  style: TextStyle(fontSize: 15, color: Colors.black87),
-                ),
+                  const SizedBox(height: 30),
+                  ChangeNotifierProvider(
+                    create: (_) => LoginFormProvider(),
+                    child: _LoginForm(),
+                  ),
+                ],
               ),
-              const SizedBox(height: 50),
-            ],
-          ),
+            ),
+            const SizedBox(height: 50),
+            TextButton(
+              onPressed: () => Navigator.pushReplacementNamed(
+                context,
+                'routeRegister',
+              ),
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(
+                  Colors.indigo.withOpacity(0.1),
+                ),
+                shape: MaterialStateProperty.all(const StadiumBorder()),
+              ),
+              child: const Text(
+                'Crear una nueva cuenta',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ),
+            const SizedBox(height: 50),
+          ],
         ),
       ),
     );

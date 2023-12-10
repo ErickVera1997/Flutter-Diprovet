@@ -32,7 +32,7 @@ class Product {
         price: json['price'] ?? .0,
         description: json['description'] ?? '',
         details: json['details'] ?? '',
-        share: json['share'] ?? '',
+        share: json['share'] ?? 0,
       );
 
   Product copy() => Product(
@@ -47,5 +47,4 @@ class Product {
         share: share,
         id: id,
       );
-  String get categoryGet => category ?? '';
 }
