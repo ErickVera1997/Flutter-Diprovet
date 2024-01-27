@@ -71,7 +71,7 @@ class _MenuShopping extends StatelessWidget {
           const Superior(
             '/routeProducts',
             '',
-            'Shopping',
+            'Carrito de Compras',
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -99,7 +99,7 @@ class _Card extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          BackgroundCardProduct(),
+          const BackgroundCardProduct(),
           Positioned(
             bottom: -5,
             right: 90,

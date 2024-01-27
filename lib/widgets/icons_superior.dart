@@ -15,7 +15,7 @@ class Superior extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,13 +42,16 @@ class Superior extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 35),
-          Text(
-            pageName,
-            style: const TextStyle(
-              fontSize: 40,
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 5,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              pageName,
+              style: const TextStyle(
+                fontSize: 40,
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 5,
+              ),
             ),
           ),
           const Text(

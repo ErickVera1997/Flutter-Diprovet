@@ -46,39 +46,6 @@ class _PurpleBox extends StatelessWidget {
       width: double.infinity,
       height: size.height * 0.4,
       color: Colors.yellow,
-      //decoration: _purpleBackground(),
-      // child: Stack(
-      //   children: [
-      //     Positioned(child: _Bubble(), top: 90, left: 30),
-      //     Positioned(child: _Bubble(), top: -40, left: -30),
-      //     Positioned(child: _Bubble(), top: -50, right: -20),
-      //     Positioned(child: _Bubble(), bottom: -50, left: 10),
-      //     Positioned(child: _Bubble(), bottom: 90, right: 20),
-      //   ],
-      // ),
-    );
-  }
-
-  BoxDecoration _purpleBackground() => const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromRGBO(240, 200, 10, 1),
-            Color.fromRGBO(250, 150, 150, 1),
-          ],
-        ),
-      );
-}
-
-class _Bubble extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: const Color.fromRGBO(255, 255, 255, 0.05),
-      ),
     );
   }
 }

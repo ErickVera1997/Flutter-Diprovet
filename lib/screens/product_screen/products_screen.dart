@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/services/products_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/products_notifier.dart';
 import '../../services/details_service.dart';
 import 'detail_screen.dart';
 
@@ -21,7 +22,7 @@ class ProductsScreen extends StatelessWidget {
               SizedBox(width: 1),
             ],
           ),
-          const _MenuCenter(),
+          _MenuCenter(),
         ],
       ),
     );
@@ -29,8 +30,6 @@ class ProductsScreen extends StatelessWidget {
 }
 
 class _MenuCenter extends StatelessWidget {
-  const _MenuCenter({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<ProductsNotifier>(context).filteredProducts;
@@ -72,7 +71,7 @@ class _CardProducts extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: [
           const SizedBox(width: 30),
-          BackgroundCardProduct(),
+          const BackgroundCardProduct(),
           Row(
             children: [
               const SizedBox(width: 10),
@@ -106,11 +105,11 @@ class _CardProducts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name!,
-                      style: const TextStyle(fontSize: 18, letterSpacing: 2),
+                      product.name ?? '',
+                      style: const TextStyle(fontSize: 15, letterSpacing: 2),
                     ),
                     Text(
-                      (product.available!)
+                      product.available ?? false
                           ? 'Product Stock'
                           : 'Producto Agotado',
                       style: const TextStyle(fontSize: 12),
@@ -172,6 +171,8 @@ class _CardProducts extends StatelessWidget {
 }
 
 class BackgroundCardProduct extends StatelessWidget {
+  const BackgroundCardProduct({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(

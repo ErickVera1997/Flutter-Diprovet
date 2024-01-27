@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_diprovet_cliente/providers/products_notifier.dart';
 import 'package:flutter_diprovet_cliente/screens/home_page.dart';
 import 'package:flutter_diprovet_cliente/screens/home_temp.dart';
 import 'package:flutter_diprovet_cliente/screens/login_page.dart';
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ProductsNotifier()),
+        ChangeNotifierProvider(
+          create: (_) => ProductsNotifier(ProductsService()),
+        ),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => DetailService()),
       ],

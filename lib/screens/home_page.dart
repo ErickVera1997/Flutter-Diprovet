@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/category.dart';
-import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/products_notifier.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

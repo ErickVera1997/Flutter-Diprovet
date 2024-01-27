@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
 import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
@@ -6,60 +7,59 @@ class DetailService extends ChangeNotifier {
   List<Detail> details = [];
 
   addProduct(Product product) {
-    try {
-      final detail =
-          details.firstWhere((element) => element.product?.id == product.id);
-      final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
+    final detail = details.firstWhereOrNull(
+      (element) => element.product?.id == product.id,
+    );
 
+    if (detail != null) {
+      final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
       details.removeWhere((element) => element.product?.id == product.id);
       details.add(detailUpdate);
-    } catch (e) {
-      details.add(
-        Detail(
-          1,
-          product,
-        ),
-      );
+    } else {
+      details.add(Detail(1, product));
     }
+
     notifyListeners();
   }
 
   incrementAmount(Detail detail) {
-    final amount = details
-        .firstWhere((element) => element.product?.id == detail.product?.id);
-    final amountUpdate = amount.copyWith(amount: (detail.amount ?? 0) + 1);
-    final index = details
-        .indexWhere((element) => element.product?.id == detail.product?.id);
-    details.removeWhere((element) => element.product?.id == detail.product?.id);
-    details.insert(index, amountUpdate);
+    final index = details.indexWhere(
+      (element) => element.product?.id == detail.product?.id,
+    );
+
+    if (index != -1) {
+      final amountUpdate =
+          details[index].copyWith(amount: (detail.amount ?? 0) + 1);
+      details[index] = amountUpdate;
+    }
+
     notifyListeners();
   }
 
   decrementAmount(Detail detail) {
-    final amount = details.firstWhere(
+    final index = details.indexWhere(
       (element) => element.product?.id == detail.product?.id,
     );
-    final amountUpdate = amount.copyWith(amount: (detail.amount ?? 0) - 1);
-    final index = details
-        .indexWhere((element) => element.product?.id == detail.product?.id);
-    details.removeWhere((element) => element.product?.id == detail.product?.id);
-    details.insert(index, amountUpdate);
+
+    if (index != -1) {
+      final amountUpdate =
+          details[index].copyWith(amount: (detail.amount ?? 0) - 1);
+      details[index] = amountUpdate;
+
+      if ((details[index].amount ?? 0) <= 0) {
+        details.removeAt(index);
+      }
+    }
+
     notifyListeners();
   }
 
   removeProduct(Product product) {
-    final index =
-        details.indexWhere((element) => element.product?.id == product.id);
-    details.removeAt(index);
+    details.removeWhere((element) => element.product?.id == product.id);
     notifyListeners();
   }
 
   double totalProducts() {
-    double sum = 0;
-    for (var detail in details) {
-      sum = sum + detail.total;
-    }
-
-    return sum;
+    return details.fold(0.0, (sum, detail) => sum + detail.total);
   }
 }
