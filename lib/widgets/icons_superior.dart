@@ -15,7 +15,7 @@ class Superior extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,38 +24,41 @@ class Superior extends StatelessWidget {
               IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: Colors.black,
                   size: 40,
                 ),
                 onPressed: () => Navigator.pushNamed(context, bottomLeft),
               ),
               const SizedBox(width: 250),
-              if (bottomRight == 'routeShopping')
+              if (bottomRight == '/routeShopping')
                 IconButton(
                   icon: const Icon(
                     Icons.add_shopping_cart_rounded,
                     size: 30,
-                    color: Colors.black12,
+                    color: Colors.black,
                   ),
                   onPressed: () => Navigator.pushNamed(context, bottomRight),
                 ),
             ],
           ),
           const SizedBox(height: 35),
-          Text(
-            pageName,
-            style: const TextStyle(
-              fontSize: 40,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 5,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              pageName,
+              style: const TextStyle(
+                fontSize: 40,
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 5,
+              ),
             ),
           ),
           const Text(
             'DIPROVET',
             style: TextStyle(
               fontSize: 20,
-              color: Colors.white,
+              color: Colors.black,
               letterSpacing: 5,
             ),
           ),

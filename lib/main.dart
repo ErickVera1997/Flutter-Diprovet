@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_diprovet_cliente/providers/products_notifier.dart';
 import 'package:flutter_diprovet_cliente/screens/home_page.dart';
 import 'package:flutter_diprovet_cliente/screens/home_temp.dart';
 import 'package:flutter_diprovet_cliente/screens/login_page.dart';
@@ -20,19 +21,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ProductsService()),
+        ChangeNotifierProvider(
+          create: (_) => ProductsNotifier(ProductsService()),
+        ),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => DetailService()),
       ],
       child: MaterialApp(
-        initialRoute: 'routeHomeTemp',
+        initialRoute: '/routeHomeTemp',
         routes: {
-          'routeHome': (_) => const HomePage(),
-          'routeHomeTemp': (_) => const TempPage(),
-          'routeProducts': (_) => const ProductsScreen(),
-          'routeShopping': (_) => const ShoppingCardPage(),
-          'routeLogin': (_) => const LoginPage(),
-          'routeRegister': (_) => const RegisterPage(),
+          '/routeHome': (_) => const HomePage(),
+          '/routeHomeTemp': (_) => const TempPage(),
+          '/routeProducts': (_) => const ProductsScreen(),
+          '/routeShopping': (_) => const ShoppingCardPage(),
+          '/routeLogin': (_) => const LoginPage(),
+          '/routeRegister': (_) => const RegisterPage(),
         },
       ),
     );

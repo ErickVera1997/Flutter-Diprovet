@@ -17,7 +17,7 @@ class _TempPageState extends State<TempPage> {
 
     await Future.delayed(const Duration(seconds: 2));
 
-    Navigator.pushNamed(context, 'routeHome');
+    Navigator.pushNamed(context, '/routeHome');
   }
 
   @override
@@ -32,18 +32,8 @@ class _TempPageState extends State<TempPage> {
                 borderRadius: BorderRadius.all(Radius.circular(70)),
               ),
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(70)),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.grey[200]!, // Color más claro
-                      Colors.grey[50]!, // Color intermedio
-                      Colors.grey[50]!, // Color más oscuro
-                    ],
-                    stops: const [0.0, 0.5, 1.0],
-                  ),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(70)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +80,7 @@ class _TempPageState extends State<TempPage> {
                           ),
                         ),
                         const Text(
-                          'Like Barcelona',
+                          'La Puerta de Ora de Manabí',
                           style: TextStyle(
                             fontSize: 15,
                             letterSpacing: 1,

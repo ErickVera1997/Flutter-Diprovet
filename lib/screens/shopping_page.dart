@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_diprovet_cliente/screens/product_screen/products_screen.dart';
 
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../models/shopping_detail.dart';
 import '../services/details_service.dart';
-import '../widgets/background_shopping.dart';
 
 class ShoppingCardPage extends StatelessWidget {
   const ShoppingCardPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class ShoppingCardPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: const [
-          ThreeBackground(),
+          BackgroundYellow(),
           _MenuShopping(),
         ],
       ),
@@ -69,9 +69,9 @@ class _MenuShopping extends StatelessWidget {
       child: Column(
         children: [
           const Superior(
-            'routeProducts',
+            '/routeProducts',
             '',
-            'Shopping',
+            'Carrito de Compras',
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -96,12 +96,10 @@ class _Card extends StatelessWidget {
     return SizedBox(
       height: 140,
       width: 320,
-      //color: Colors.white,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          const SizedBox(width: 30),
-          _fondoTarjeta(),
+          const BackgroundCardProduct(),
           Positioned(
             bottom: -5,
             right: 90,
@@ -109,7 +107,7 @@ class _Card extends StatelessWidget {
               child: const Icon(
                 Icons.delete,
                 size: 35,
-                color: Colors.black,
+                color: Colors.yellow,
               ),
               onTap: () => Provider.of<DetailService>(context, listen: false)
                   .removeProduct(detail.product!),
@@ -174,10 +172,10 @@ class _Card extends StatelessWidget {
               const SizedBox(width: 60),
               Container(
                 width: 40,
-                height: 100,
+                height: 110,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: Colors.grey[100],
+                  color: Colors.yellow,
                 ),
                 child: _Counter(
                   amount: detail.amount!,
@@ -218,32 +216,20 @@ class _Counter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          child: const Icon(Icons.remove, size: 30, color: Colors.black),
+          child: const Icon(Icons.remove, size: 30, color: Colors.white),
           onTap: onDecrement,
         ),
         const SizedBox(height: 5),
         Text(
           amount.toString(),
-          style: const TextStyle(color: Colors.red, fontSize: 15),
+          style: const TextStyle(color: Colors.black, fontSize: 15),
         ),
         const SizedBox(height: 5),
         GestureDetector(
-          child: const Icon(Icons.add, size: 30, color: Colors.black),
+          child: const Icon(Icons.add, size: 30, color: Colors.white),
           onTap: onIncrement,
         ),
       ],
     );
   }
-}
-
-_fondoTarjeta() {
-  return Container(
-    width: 320,
-    height: 130,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(25),
-      border: Border.all(width: 3, color: Colors.brown.shade100),
-      color: Colors.grey[50],
-    ),
-  );
 }
