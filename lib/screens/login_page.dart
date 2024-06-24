@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   Text(
                     'Login',
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
