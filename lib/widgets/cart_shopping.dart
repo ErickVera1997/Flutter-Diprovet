@@ -32,9 +32,9 @@ void secondDetailPage(BuildContext context) {
               const SizedBox(
                 height: 30,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Producto',
                     style: TextStyle(fontSize: 20),

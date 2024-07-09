@@ -16,8 +16,8 @@ class ProductsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Row(
-            children: const [
+          const Row(
+            children: [
               BackgroundYellow(),
               SizedBox(width: 1),
             ],

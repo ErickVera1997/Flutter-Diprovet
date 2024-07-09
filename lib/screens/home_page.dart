@@ -13,8 +13,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Stack(
-        children: const [
+      body: const Stack(
+        children: [
           BackgroundYellow(),
           _CardSuperior(),
         ],

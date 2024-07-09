@@ -42,10 +42,10 @@ class LoginPage extends StatelessWidget {
                 'routeRegister',
               ),
               style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(
+                overlayColor: WidgetStateProperty.all(
                   Colors.indigo.withOpacity(0.1),
                 ),
-                shape: MaterialStateProperty.all(const StadiumBorder()),
+                shape: WidgetStateProperty.all(const StadiumBorder()),
               ),
               child: const Text(
                 'Crear una nueva cuenta',

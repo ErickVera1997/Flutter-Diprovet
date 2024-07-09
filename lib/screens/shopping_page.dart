@@ -12,14 +12,14 @@ class ShoppingCardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Stack(
-        children: const [
+        children: [
           BackgroundYellow(),
           _MenuShopping(),
         ],
       ),
-      floatingActionButton: const _Button(),
+      floatingActionButton: _Button(),
     );
   }
 }
