@@ -39,23 +39,17 @@ void secondDetailPage(BuildContext context) {
                     'Producto',
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
+                  SizedBox(width: 20),
                   Text(
                     'Cantidad',
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
+                  SizedBox(width: 20),
                   Text(
                     'Precio',
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
+                  SizedBox(width: 20),
                   Text(
                     'Subtotales',
                     style: TextStyle(fontSize: 20),
@@ -66,15 +60,14 @@ void secondDetailPage(BuildContext context) {
                 height: 5,
                 color: Colors.amber,
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               SizedBox(
                 width: 410,
                 height: 300,
                 child: ListView.separated(
                   itemCount: product.details.length,
-                  itemBuilder: (context, index) => List(product.details[index]),
+                  itemBuilder: (context, index) =>
+                      _List(product.details[index]),
                   separatorBuilder: (_, __) => const SizedBox(height: 10),
                 ),
               ),
@@ -94,9 +87,7 @@ void secondDetailPage(BuildContext context) {
                         '\$',
                         style: TextStyle(fontSize: 30),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Text(
                         product.totalProducts().toStringAsFixed(2),
                         style: const TextStyle(fontSize: 25),
@@ -105,9 +96,7 @@ void secondDetailPage(BuildContext context) {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 80,
-              ),
+              const SizedBox(height: 80),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -124,9 +113,7 @@ void secondDetailPage(BuildContext context) {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () async {
                       final image = await controller.capture();
@@ -162,13 +149,13 @@ Future saveImage(Uint8List bytes) async {
   final image = File('${directory.path}/flutter.png');
   image.writeAsBytesSync(bytes);
   const text = 'Shared from DIPROVET';
-  await Share.shareFiles([image.path], text: text);
+  await Share.share(image.path, subject: text);
 }
 
-class List extends StatelessWidget {
+class _List extends StatelessWidget {
   final Detail details;
 
-  const List(this.details, {Key? key}) : super(key: key);
+  const _List(this.details);
 
   @override
   Widget build(BuildContext context) {
@@ -179,20 +166,12 @@ class List extends StatelessWidget {
           details.product!.name!,
           style: const TextStyle(color: Colors.amber),
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(details.amount.toString()),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(details.product!.price!.toStringAsFixed(2)),
-        const SizedBox(
-          width: 20,
-        ),
-        Text(
-          details.total.toStringAsFixed(2),
-        ),
+        const SizedBox(width: 20),
+        Text(details.total.toStringAsFixed(2)),
       ],
     );
   }

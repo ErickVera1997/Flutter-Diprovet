@@ -28,7 +28,7 @@ class _CardSuperior extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newService = context.read<ProductsNotifier>().categories;
+    final newService = context.watch<ProductsNotifier>().categories;
 
     return SafeArea(
       child: Column(
@@ -80,8 +80,6 @@ class _CardHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsService = Provider.of<ProductsNotifier>(context, listen: false);
-
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -129,6 +127,7 @@ class _CardHome extends StatelessWidget {
                   icon: const Icon(Icons.chevron_right_outlined),
                   color: Colors.black,
                   onPressed: () {
+                    final newsService = context.read<ProductsNotifier>();
                     newsService.selectedCategory = category.name;
                     Navigator.pushNamed(context, '/routeProducts');
                   },

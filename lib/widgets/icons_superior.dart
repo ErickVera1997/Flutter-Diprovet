@@ -20,6 +20,7 @@ class Superior extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
                 icon: const Icon(
@@ -29,7 +30,6 @@ class Superior extends StatelessWidget {
                 ),
                 onPressed: () => Navigator.pushNamed(context, bottomLeft),
               ),
-              const SizedBox(width: 250),
               if (bottomRight == '/routeShopping')
                 IconButton(
                   icon: const Icon(

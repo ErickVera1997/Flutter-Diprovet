@@ -32,7 +32,7 @@ class ProductsScreen extends StatelessWidget {
 class _MenuCenter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<ProductsNotifier>(context).filteredProducts;
+    final products = context.watch<ProductsNotifier>().filteredProducts;
 
     return SafeArea(
       child: Column(
