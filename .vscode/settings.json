@@ -28,5 +28,6 @@
         "Productos",
         "Subtotales",
         "tienes"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
