@@ -28,9 +28,7 @@ class DetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: SizedBox(

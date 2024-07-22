@@ -31,9 +31,6 @@ class ProductsNotifier extends ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-    isLoading = true;
-    notifyListeners();
-
     try {
       final productsMap = await _productService.fetchProducts();
 
@@ -43,12 +40,8 @@ class ProductsNotifier extends ChangeNotifier {
         products.add(tempProduct);
       });
     } catch (e) {
-      // Handle error
       print('Error loading products: $e');
     }
-
-    isLoading = false;
-    notifyListeners();
   }
 
   void filterProducts(String category) {

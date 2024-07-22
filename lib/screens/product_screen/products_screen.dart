@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/products_notifier.dart';
 import '../../services/details_service.dart';
+import '../../widgets/background_card.dart';
 import 'detail_screen.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -16,12 +18,7 @@ class ProductsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          const Row(
-            children: [
-              BackgroundYellow(),
-              SizedBox(width: 1),
-            ],
-          ),
+          const BackgroundYellow(),
           _MenuCenter(),
         ],
       ),
@@ -39,10 +36,10 @@ class _MenuCenter extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Superior(
+          Superior(
             '/routeHome',
             '/routeShopping',
-            'Productos',
+            AppLocalizations.of(context)!.product_label,
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -144,8 +141,7 @@ class _CardProducts extends StatelessWidget {
               const SizedBox(width: 50),
               GestureDetector(
                 onTap: () {
-                  final details =
-                      Provider.of<DetailService>(context, listen: false);
+                  final details = context.read<DetailService>();
                   details.addProduct(product);
                 },
                 child: Container(
@@ -165,23 +161,6 @@ class _CardProducts extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class BackgroundCardProduct extends StatelessWidget {
-  const BackgroundCardProduct({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 320,
-      height: 130,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(width: 3, color: Colors.black),
-        color: Colors.grey[50],
       ),
     );
   }

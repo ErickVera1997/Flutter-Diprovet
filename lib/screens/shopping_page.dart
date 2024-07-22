@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/screens/product_screen/products_screen.dart';
 
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../models/shopping_detail.dart';
 import '../services/details_service.dart';
+import '../widgets/background_card.dart';
 
 class ShoppingCardPage extends StatelessWidget {
   const ShoppingCardPage({Key? key}) : super(key: key);

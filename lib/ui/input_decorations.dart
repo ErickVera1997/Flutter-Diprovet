@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+Color deepOrange = Colors.deepOrange.shade400;
+
 class InputDecorations {
   static InputDecoration authInputDecoration({
     required String hintText,
@@ -8,21 +10,14 @@ class InputDecorations {
   }) {
     return InputDecoration(
       enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: green,
-        ),
+        borderSide: BorderSide(color: deepOrange),
       ),
       focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: green,
-          width: 2,
-        ),
+        borderSide: BorderSide(color: deepOrange, width: 2),
       ),
       hintText: hintText,
       labelText: labelText,
-      labelStyle: TextStyle(
-        color: green,
-      ),
+      labelStyle: TextStyle(color: deepOrange),
       prefixIcon: prefixIcon != null
           ? Icon(
               prefixIcon,
@@ -32,5 +27,3 @@ class InputDecorations {
     );
   }
 }
-
-Color green = Colors.deepOrange.shade400;

@@ -28,7 +28,7 @@ class _CardSuperior extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newService = context.watch<ProductsNotifier>().categories;
+    final categories = context.watch<ProductsNotifier>().categories;
 
     return SafeArea(
       child: Column(
@@ -38,8 +38,8 @@ class _CardSuperior extends StatelessWidget {
           const SizedBox(height: 30),
           Expanded(
             child: ListView.separated(
-              itemCount: newService.length,
-              itemBuilder: (context, index) => _CardHome(newService[index]),
+              itemCount: categories.length,
+              itemBuilder: (context, index) => _CardHome(categories[index]),
               separatorBuilder: (_, __) => const SizedBox(height: 30),
             ),
           ),
@@ -74,9 +74,9 @@ class _Icons extends StatelessWidget {
 }
 
 class _CardHome extends StatelessWidget {
-  final Category category;
+  const _CardHome(this.category);
 
-  const _CardHome(this.category, {Key? key}) : super(key: key);
+  final Category category;
 
   @override
   Widget build(BuildContext context) {

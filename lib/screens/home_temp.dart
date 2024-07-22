@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TempPage extends StatefulWidget {
   const TempPage({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _TempPageState extends State<TempPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -48,9 +51,9 @@ class _TempPageState extends State<TempPage> {
                     const SizedBox(height: 140),
                     ElevatedButton(
                       onPressed: _isButtonEnabled ? _startNavigation : null,
-                      child: const Text(
-                        'Iniciar',
-                        style: TextStyle(
+                      child: Text(
+                        l10n!.helloWorld,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           letterSpacing: 2,
@@ -66,6 +69,14 @@ class _TempPageState extends State<TempPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Text(
+                          'La Puerta de Ora de Manabí',
+                          style: TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 1,
+                            color: Colors.red,
+                          ),
+                        ),
                         Container(
                           width: 25,
                           height: 25,
@@ -77,14 +88,6 @@ class _TempPageState extends State<TempPage> {
                               'assets/logo_calidad.png',
                               fit: BoxFit.cover,
                             ),
-                          ),
-                        ),
-                        const Text(
-                          'La Puerta de Ora de Manabí',
-                          style: TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1,
-                            color: Colors.red,
                           ),
                         ),
                       ],
