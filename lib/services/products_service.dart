@@ -1,18 +1,26 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ProductsService {
-  final String _baseUrl = 'flutter-varios-38eb4-default-rtdb.firebaseio.com';
+  ProductsService(this.dioClient);
+  final Dio dioClient;
 
-  Future<Map<String, dynamic>> fetchProducts() async {
-    final url = Uri.https(_baseUrl, 'products.json');
-    final response = await http.get(url);
+  Future<Either<String, List<dynamic>>> fetchProducts() async {
+    try {
+      const url =
+          'https://flutter-varios-38eb4-default-rtdb.firebaseio.com/products.json';
+      final response = await dioClient.get<Map<String, dynamic>>(url);
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load products');
+      return right(response.data?.values.toList() ?? []);
+    } on DioException catch (err) {
+      debugPrint(err.toString());
+
+      return left('Error del servidor.');
+    } catch (err) {
+      debugPrint(err.toString());
+
+      return left('Error inesperado.');
     }
   }
 }

@@ -1,27 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_diprovet_cliente/models/category.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
-
-import '../services/products_service.dart';
+import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
 class ProductsNotifier extends ChangeNotifier {
-  final ProductsService _productService;
+  ProductsNotifier({required this.productService}) {
+    loadProducts();
+  }
+  final ProductsService productService;
   final List<Product> products = [];
   List<Product> filteredProducts = [];
   bool isLoading = false;
   String _selectedCategory = 'Vitaminas';
 
   final List<Category> categories = [
-    Category('Desparasitante', 'assets/home/desparasitante.jpeg'),
-    Category('Vitaminas', 'assets/home/vitaminas.jpeg'),
-    Category('Desinfectante', 'assets/home/desinfectante.jpeg'),
-    Category('Antibiótico', 'assets/home/antibiotico.jpeg'),
-    Category('Más', 'assets/logo.jpeg'),
+    const Category('Desparasitante', 'assets/home/desparasitante.jpeg'),
+    const Category('Vitaminas', 'assets/home/vitaminas.jpeg'),
+    const Category('Desinfectante', 'assets/home/desinfectante.jpeg'),
+    const Category('Antibiótico', 'assets/home/antibiotico.jpeg'),
+    const Category('Más', 'assets/logo.jpeg'),
   ];
-
-  ProductsNotifier(this._productService) {
-    loadProducts();
-  }
 
   String get selectedCategory => _selectedCategory;
   set selectedCategory(String selectedCategory) {
@@ -31,17 +29,24 @@ class ProductsNotifier extends ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-    try {
-      final productsMap = await _productService.fetchProducts();
+    isLoading = true;
+    notifyListeners();
 
-      productsMap.forEach((key, value) {
-        final tempProduct = Product.fromMap(value);
-        tempProduct.id = key;
-        products.add(tempProduct);
-      });
-    } catch (e) {
-      print('Error loading products: $e');
-    }
+    final result = await productService.fetchProducts();
+    result.fold(
+      (errorMessage) {
+        debugPrint('Error loading products: $errorMessage');
+      },
+      (productsMap) {
+        productsMap.forEach((value) {
+          final tempProduct = Product.fromMap(value as Map<String, dynamic>);
+          products.add(tempProduct);
+        });
+      },
+    );
+
+    isLoading = false;
+    notifyListeners();
   }
 
   void filterProducts(String category) {
