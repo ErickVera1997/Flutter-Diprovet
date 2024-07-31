@@ -1,30 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/category.dart';
-
+import 'package:flutter_diprovet_cliente/presentation/product_screen/products_screen.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/confirm_operation.dart';
+import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
+import 'package:flutter_diprovet_cliente/providers/products_notifier.dart';
+import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products_notifier.dart';
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static String routeName = 'home';
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: const Stack(
+      body: Stack(
         children: [
-          BackgroundYellow(),
-          _CardSuperior(),
+          const BackgroundYellow(),
+          ChangeNotifierProvider(
+            create: (context) {
+              return AuthenticationProvider(service: AuthenticationService());
+            },
+            builder: (context, child) => const _CardSuperior(),
+          ),
         ],
       ),
     );
   }
 }
 
-class _CardSuperior extends StatelessWidget {
+class _CardSuperior extends StatefulWidget {
   const _CardSuperior();
+
+  @override
+  State<_CardSuperior> createState() => _CardSuperiorState();
+}
+
+class _CardSuperiorState extends State<_CardSuperior> {
+  Future<void> _onCloseSession() async {
+    final validateClose = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return const ConfirmOperationAlert(
+              text: 'Al cerrar sesión perdera todos'
+                  ' sus registros, ¿Desea continuar?',
+            );
+          },
+        ) ??
+        false;
+
+    if (!validateClose || !mounted) return;
+    final response = await context.read<AuthenticationProvider>().logOutUser();
+
+    if (!mounted) return;
+    response.fold(
+      (errorMessage) {
+        /*showDialog<void>(
+          context: context,
+          builder: (context) => ErrorAlert(text: errorMessage),
+        );*/
+      },
+      (unit) {
+        context.go('/');
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +83,24 @@ class _CardSuperior extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          _Icons(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.apps, size: 40, color: Colors.black),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+              const SizedBox(width: 240),
+              IconButton(
+                icon: const Icon(
+                  Icons.add_shopping_cart_rounded,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                onPressed: _onCloseSession,
+              ),
+            ],
+          ),
           const SizedBox(height: 30),
           Expanded(
             child: ListView.separated(
@@ -45,30 +111,6 @@ class _CardSuperior extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _Icons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.apps, size: 40, color: Colors.black),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        ),
-        const SizedBox(width: 240),
-        IconButton(
-          icon: const Icon(
-            Icons.add_shopping_cart_rounded,
-            size: 30,
-            color: Colors.black,
-          ),
-          onPressed: () => Navigator.pushNamed(context, '/routeShopping'),
-        ),
-      ],
     );
   }
 }
@@ -127,9 +169,9 @@ class _CardHome extends StatelessWidget {
                   icon: const Icon(Icons.chevron_right_outlined),
                   color: Colors.black,
                   onPressed: () {
-                    final newsService = context.read<ProductsNotifier>();
-                    newsService.selectedCategory = category.name;
-                    Navigator.pushNamed(context, '/routeProducts');
+                    context.read<ProductsNotifier>().selectedCategory =
+                        category.name;
+                    context.goNamed(ProductsScreen.routeName);
                   },
                 ),
               ),
