@@ -6,15 +6,16 @@ import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
 class DetailService extends ChangeNotifier {
   List<Detail> details = [];
 
-  addProduct(Product product) {
+  void addProduct(Product product) {
     final detail = details.firstWhereOrNull(
       (element) => element.product?.id == product.id,
     );
 
     if (detail != null) {
       final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
-      details.removeWhere((element) => element.product?.id == product.id);
-      details.add(detailUpdate);
+      details
+        ..removeWhere((element) => element.product?.id == product.id)
+        ..add(detailUpdate);
     } else {
       details.add(Detail(1, product));
     }
@@ -22,7 +23,7 @@ class DetailService extends ChangeNotifier {
     notifyListeners();
   }
 
-  incrementAmount(Detail detail) {
+  void incrementAmount(Detail detail) {
     final index = details.indexWhere(
       (element) => element.product?.id == detail.product?.id,
     );
@@ -36,7 +37,7 @@ class DetailService extends ChangeNotifier {
     notifyListeners();
   }
 
-  decrementAmount(Detail detail) {
+  void decrementAmount(Detail detail) {
     final index = details.indexWhere(
       (element) => element.product?.id == detail.product?.id,
     );
@@ -54,7 +55,7 @@ class DetailService extends ChangeNotifier {
     notifyListeners();
   }
 
-  removeProduct(Product product) {
+  void removeProduct(Product product) {
     details.removeWhere((element) => element.product?.id == product.id);
     notifyListeners();
   }

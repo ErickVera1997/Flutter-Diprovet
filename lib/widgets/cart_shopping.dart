@@ -7,7 +7,6 @@ import 'package:flutter_diprovet_cliente/services/details_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
 
 void secondDetailPage(BuildContext context) {
   final controller = ScreenshotController();
@@ -144,12 +143,12 @@ void secondDetailPage(BuildContext context) {
   );
 }
 
-Future saveImage(Uint8List bytes) async {
+Future<void> saveImage(Uint8List bytes) async {
   final directory = await getApplicationDocumentsDirectory();
   final image = File('${directory.path}/flutter.png');
   image.writeAsBytesSync(bytes);
   const text = 'Shared from DIPROVET';
-  await Share.share(image.path, subject: text);
+  /* await Share.share(image.path, subject: text);*/
 }
 
 class _List extends StatelessWidget {

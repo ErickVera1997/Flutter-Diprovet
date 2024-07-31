@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Superior extends StatelessWidget {
-  final String bottomLeft;
-  final String bottomRight;
-  final String pageName;
-
   const Superior(
-    this.bottomLeft,
     this.bottomRight,
     this.pageName, {
     Key? key,
   }) : super(key: key);
+  final String bottomRight;
+  final String pageName;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class Superior extends StatelessWidget {
                   color: Colors.black,
                   size: 40,
                 ),
-                onPressed: () => Navigator.pushNamed(context, bottomLeft),
+                onPressed: () => context.pop(context),
               ),
               if (bottomRight == '/routeShopping')
                 IconButton(

@@ -12,6 +12,19 @@ class Product {
     this.id,
   });
 
+  factory Product.fromMap(Map<String, dynamic> json) => Product(
+        id: (json['id'] ?? '').toString(),
+        available: json['available'] as bool? ?? false,
+        species: (json['specie'] ?? '').toString(),
+        name: (json['name'] ?? 'Diprovet').toString(),
+        category: (json['category'] ?? '').toString(),
+        picture: (json['picture'] ?? '').toString(),
+        price: double.parse(json['price']?.toString() ?? '.0'),
+        description: (json['description'] ?? 'Diprovet').toString(),
+        details: (json['details'] ?? '').toString(),
+        share: int.parse(json['share']?.toString() ?? ''),
+      );
+
   bool? available;
   String? species;
   int? share;
@@ -22,18 +35,6 @@ class Product {
   String? description;
   double? price;
   String? id;
-
-  factory Product.fromMap(Map<String, dynamic> json) => Product(
-        available: json['available'] ?? false,
-        species: json['specie'] ?? '',
-        name: json['name'] ?? 'Diprovet',
-        category: json['category'] ?? '',
-        picture: json['picture'] ?? '',
-        price: json['price'] ?? .0,
-        description: json['description'] ?? '',
-        details: json['details'] ?? '',
-        share: json['share'] ?? 0,
-      );
 
   Product copy() => Product(
         available: available,

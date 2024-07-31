@@ -3,7 +3,7 @@ import 'package:flutter_diprovet_cliente/models/category.dart';
 import 'package:flutter_diprovet_cliente/presentation/product_screen/products_screen.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/confirm_operation.dart';
 import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
-import 'package:flutter_diprovet_cliente/providers/products_notifier.dart';
+import 'package:flutter_diprovet_cliente/providers/products_provider.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';

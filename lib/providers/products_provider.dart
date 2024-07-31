@@ -38,10 +38,10 @@ class ProductsNotifier extends ChangeNotifier {
         debugPrint('Error loading products: $errorMessage');
       },
       (productsMap) {
-        productsMap.forEach((value) {
+        for (final value in productsMap) {
           final tempProduct = Product.fromMap(value as Map<String, dynamic>);
           products.add(tempProduct);
-        });
+        }
       },
     );
 

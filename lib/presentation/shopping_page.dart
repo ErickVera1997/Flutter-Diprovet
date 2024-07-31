@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
+import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
-import '../models/shopping_detail.dart';
-import '../services/details_service.dart';
-import '../widgets/background_card.dart';
 
 class ShoppingCardPage extends StatelessWidget {
   const ShoppingCardPage({Key? key}) : super(key: key);
@@ -69,7 +67,6 @@ class _MenuShopping extends StatelessWidget {
       child: Column(
         children: [
           const Superior(
-            '/routeProducts',
             '',
             'Carrito de Compras',
           ),
@@ -159,7 +156,7 @@ class _Card extends StatelessWidget {
                         Text(detail.product!.share.toString()),
                         const Text('ml'),
                         const SizedBox(width: 50),
-                        const Text('\$'),
+                        const Text(r'$'),
                         Text(detail.product!.price.toString()),
                         const SizedBox(
                           width: 20,
@@ -200,10 +197,10 @@ class _Card extends StatelessWidget {
 
 class _Counter extends StatelessWidget {
   const _Counter({
-    Key? key,
     required this.amount,
     required this.onIncrement,
     required this.onDecrement,
+    Key? key,
   }) : super(key: key);
 
   final int amount;
@@ -216,8 +213,8 @@ class _Counter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          child: const Icon(Icons.remove, size: 30, color: Colors.white),
           onTap: onDecrement,
+          child: const Icon(Icons.remove, size: 30, color: Colors.white),
         ),
         const SizedBox(height: 5),
         Text(
@@ -226,8 +223,8 @@ class _Counter extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         GestureDetector(
-          child: const Icon(Icons.add, size: 30, color: Colors.white),
           onTap: onIncrement,
+          child: const Icon(Icons.add, size: 30, color: Colors.white),
         ),
       ],
     );

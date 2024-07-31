@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/models/product.dart';
+import 'package:flutter_diprovet_cliente/presentation/home_page.dart';
+import 'package:flutter_diprovet_cliente/providers/products_provider.dart';
+import 'package:flutter_diprovet_cliente/services/details_service.dart';
+import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
 import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/products_notifier.dart';
-import '../../services/details_service.dart';
-import '../../widgets/background_card.dart';
-import 'detail_screen.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);
+  static String routeName = 'products';
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +33,15 @@ class _MenuCenter extends StatelessWidget {
 
     return SafeArea(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Superior(
-            '/routeHome',
-            '/routeShopping',
-            AppLocalizations.of(context)!.product_label,
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 40,
+            ),
+            onPressed: () => context.goNamed(HomePage.routeName),
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -79,17 +81,25 @@ class _CardProducts extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: GestureDetector(
-                  onTap: () => Navigator.push(
+                  onTap: () {}
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => DetailScreen(product: product),
                     ),
-                  ),
+                  ),*/
+                  ,
                   child: ClipOval(
                     child: FadeInImage(
                       placeholder: const AssetImage('assets/jar-loading.gif'),
                       image: NetworkImage(product.picture!),
                       fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/logo.jpeg',
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -131,7 +141,7 @@ class _CardProducts extends StatelessWidget {
                         Text(product.share.toString()),
                         const Text('ml'),
                         const SizedBox(width: 60),
-                        const Text('\$'),
+                        const Text(r'$'),
                         Text(product.price.toString()),
                       ],
                     ),
@@ -141,8 +151,7 @@ class _CardProducts extends StatelessWidget {
               const SizedBox(width: 50),
               GestureDetector(
                 onTap: () {
-                  final details = context.read<DetailService>();
-                  details.addProduct(product);
+                  context.read<DetailService>().addProduct(product);
                 },
                 child: Container(
                   width: 50,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../models/product.dart';
+import 'package:flutter_diprovet_cliente/models/product.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key, required this.product}) : super(key: key);
+  const DetailScreen({required this.product, Key? key}) : super(key: key);
 
   final Product product;
 
@@ -58,7 +58,7 @@ class DetailScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  '\$',
+                                  r'$',
                                   style: TextStyle(
                                     fontSize: 25,
                                     color: Colors.white,
