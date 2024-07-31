@@ -1,26 +1,24 @@
-include: package:flutter_lints/flutter.yaml
-analyzer:
-  errors:
-    todo: ignore
-    include_file_not_found: ignore
+include: package:very_good_analysis/analysis_options.yaml
+
+
+analyzer:  
   exclude:
-    - vendor/**
-    - '**/*.g.dart'
+    - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "**/injection.config.dart"
+    - "**/*.gr.dart"
+    - "**/*.iconfig.dart"
+    - "**/*.config.dart"
+
+  errors:
+    public_member_api_docs: ignore
+    invalid_annotation_target: ignore
 
   plugins:
-    - dart_code_metrics
-linter:
-  rules:
-    ## The following rules are excluded only to keep compatibility with our previous lint set (pedantic).
-    ## There's room to discuss them individually and raise PRs adjusting our codebase.
-    avoid_print: false
-    require_trailing_commas: true
-    prefer_single_quotes: true 
-    directives_ordering: true
+      - dart_code_metrics
 
 dart_code_metrics:
+  metrics-exclude:
+    - test/**
   rules:
     # Dart
     - avoid-unused-parameters
@@ -28,7 +26,6 @@ dart_code_metrics:
     - no-boolean-literal-compare
     - no-equal-then-else
     - prefer-conditional-expressions
-    - prefer-moving-to-variable
     - prefer-trailing-comma
 
     # Flutter
