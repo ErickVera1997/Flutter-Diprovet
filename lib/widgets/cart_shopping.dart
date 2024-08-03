@@ -2,15 +2,15 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
-import 'package:flutter_diprovet_cliente/services/details_service.dart';
+import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 void secondDetailPage(BuildContext context) {
   final controller = ScreenshotController();
-  final product = Provider.of<DetailService>(context, listen: false);
+  final product = Provider.of<ShoppingProvider>(context, listen: false);
 
   Navigator.of(context).push(
     MaterialPageRoute<void>(
@@ -119,6 +119,11 @@ void secondDetailPage(BuildContext context) {
                       if (image == null) return;
                       await saveImage(image);
                     },
+                    style: TextButton.styleFrom(
+                      fixedSize: const Size(270, 50),
+                      backgroundColor: Colors.amber,
+                      shape: const StadiumBorder(),
+                    ),
                     child: const Text(
                       'Enviar nota de pedido',
                       style: TextStyle(
@@ -126,11 +131,6 @@ void secondDetailPage(BuildContext context) {
                         fontSize: 20,
                         letterSpacing: 2,
                       ),
-                    ),
-                    style: TextButton.styleFrom(
-                      fixedSize: const Size(270, 50),
-                      backgroundColor: Colors.amber,
-                      shape: const StadiumBorder(),
                     ),
                   ),
                 ],
@@ -152,9 +152,9 @@ Future<void> saveImage(Uint8List bytes) async {
 }
 
 class _List extends StatelessWidget {
-  final Detail details;
-
   const _List(this.details);
+
+  final Detail details;
 
   @override
   Widget build(BuildContext context) {
@@ -162,13 +162,13 @@ class _List extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
-          details.product!.name!,
+          details.product!.name,
           style: const TextStyle(color: Colors.amber),
         ),
         const SizedBox(width: 10),
         Text(details.amount.toString()),
         const SizedBox(width: 10),
-        Text(details.product!.price!.toStringAsFixed(2)),
+        Text(details.product!.price.toStringAsFixed(2)),
         const SizedBox(width: 20),
         Text(details.total.toStringAsFixed(2)),
       ],

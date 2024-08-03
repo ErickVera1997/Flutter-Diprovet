@@ -18,13 +18,13 @@ class BtnIconDiprovet extends StatelessWidget {
       onPressed: onTap,
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(
-          btnColor ?? const Color(0xFFFFFF00),
+          btnColor ?? const Color(0xFF4CAF50),
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
-      icon: Icon(icon, color: Colors.white),
+      icon: Icon(icon, color: Colors.black),
     );
   }
 }

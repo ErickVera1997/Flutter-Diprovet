@@ -1,23 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
-import 'package:flutter_diprovet_cliente/services/details_service.dart';
+import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
+import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
 import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
-import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
+import 'package:flutter_diprovet_cliente/widgets/cart_shopping.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class ShoppingCardPage extends StatelessWidget {
-  const ShoppingCardPage({Key? key}) : super(key: key);
+class ShoppingPageArg {
+  const ShoppingPageArg({
+    required this.details,
+  });
+
+  final List<Detail> details;
+}
+
+class ShoppingPage extends StatelessWidget {
+  const ShoppingPage({required this.arg, Key? key}) : super(key: key);
+
+  static String routeName = 'shopping';
+
+  final ShoppingPageArg arg;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Stack(
+    return _ShoppingPageWidget(details: arg.details);
+  }
+}
+
+class _ShoppingPageWidget extends StatelessWidget {
+  const _ShoppingPageWidget({required this.details, Key? key})
+      : super(key: key);
+
+  final List<Detail> details;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue[100],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => context.goNamed(ProductsPage.routeName),
+        ),
+        centerTitle: true,
+        title: const Text(
+          'Shopping',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 4,
+          ),
+        ),
+      ),
+      backgroundColor: Colors.yellow[50],
+      body: ListView(
         children: [
-          BackgroundYellow(),
-          _MenuShopping(),
+          SizedBox(
+            height: 600,
+            child: ListView.builder(
+              itemCount: details.length,
+              itemBuilder: (context, index) => _Card(details[index]),
+            ),
+          ),
         ],
       ),
-      floatingActionButton: _Button(),
+      floatingActionButton: const _Button(),
     );
   }
 }
@@ -56,33 +109,6 @@ class _Button extends StatelessWidget {
   }
 }
 
-class _MenuShopping extends StatelessWidget {
-  const _MenuShopping({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final details = Provider.of<DetailService>(context).details;
-
-    return SafeArea(
-      child: Column(
-        children: [
-          const Superior(
-            '',
-            'Carrito de Compras',
-          ),
-          const SizedBox(height: 30),
-          Expanded(
-            child: ListView.builder(
-              itemCount: details.length,
-              itemBuilder: (context, index) => _Card(details[index]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _Card extends StatelessWidget {
   const _Card(this.detail);
 
@@ -106,7 +132,7 @@ class _Card extends StatelessWidget {
                 size: 35,
                 color: Colors.yellow,
               ),
-              onTap: () => Provider.of<DetailService>(context, listen: false)
+              onTap: () => Provider.of<ShoppingProvider>(context, listen: false)
                   .removeProduct(detail.product!),
             ),
           ),
@@ -118,7 +144,7 @@ class _Card extends StatelessWidget {
                 height: 110,
                 child: ClipOval(
                   child: Image.network(
-                    detail.product!.picture!,
+                    detail.product!.picture,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -132,7 +158,7 @@ class _Card extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      detail.product!.name!,
+                      detail.product!.name,
                       style: const TextStyle(fontSize: 18, letterSpacing: 2),
                     ),
                     const Text('Product Stock', style: TextStyle(fontSize: 12)),
@@ -176,12 +202,13 @@ class _Card extends StatelessWidget {
                 ),
                 child: _Counter(
                   amount: detail.amount!,
-                  onIncrement: () =>
-                      Provider.of<DetailService>(context, listen: false)
-                          .incrementAmount(detail),
+                  onIncrement: () {
+                    Provider.of<ShoppingProvider>(context, listen: false)
+                        .incrementAmount(detail);
+                  },
                   onDecrement: () {
                     if (detail.amount! > 0) {
-                      Provider.of<DetailService>(context, listen: false)
+                      Provider.of<ShoppingProvider>(context, listen: false)
                           .decrementAmount(detail);
                     }
                   },

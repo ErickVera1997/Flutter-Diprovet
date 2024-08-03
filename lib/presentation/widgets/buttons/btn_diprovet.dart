@@ -22,7 +22,7 @@ class BtnDiprovet extends StatelessWidget {
         onPressed: onTap,
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(
-            btnColor ?? const Color(0xFFFFFF00),
+            btnColor ?? const Color(0xFF4CAF50),
           ),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -42,9 +42,9 @@ class BtnDiprovet extends StatelessWidget {
                 child: Text(
                   text,
                   style: const TextStyle(
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),

@@ -1,51 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/category.dart';
-import 'package:flutter_diprovet_cliente/presentation/product_screen/products_screen.dart';
+import 'package:flutter_diprovet_cliente/core/models/category.dart';
+import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
+import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
+import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/confirm_operation.dart';
-import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
-import 'package:flutter_diprovet_cliente/providers/products_provider.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
-import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   static String routeName = 'home';
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Stack(
-        children: [
-          const BackgroundYellow(),
-          ChangeNotifierProvider(
-            create: (context) {
-              return AuthenticationProvider(service: AuthenticationService());
-            },
-            builder: (context, child) => const _CardSuperior(),
-          ),
-        ],
-      ),
+    return ChangeNotifierProvider(
+      create: (context) {
+        return AuthenticationProvider(service: AuthenticationService());
+      },
+      builder: (context, child) => const _HomePageWidget(),
     );
   }
 }
 
-class _CardSuperior extends StatefulWidget {
-  const _CardSuperior();
+class _HomePageWidget extends StatefulWidget {
+  const _HomePageWidget();
 
   @override
-  State<_CardSuperior> createState() => _CardSuperiorState();
+  State<_HomePageWidget> createState() => _HomePageWidgetState();
 }
 
-class _CardSuperiorState extends State<_CardSuperior> {
+class _HomePageWidgetState extends State<_HomePageWidget> {
   Future<void> _onCloseSession() async {
     final validateClose = await showDialog<bool>(
           context: context,
@@ -77,37 +64,103 @@ class _CardSuperiorState extends State<_CardSuperior> {
 
   @override
   Widget build(BuildContext context) {
-    final categories = context.watch<ProductsNotifier>().categories;
+    final categories = context.watch<ProductsProvider>().categories;
+    final userName = context.select<AuthenticationProvider, String>(
+      (provider) => provider.user?.displayName ?? '',
+    );
 
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.apps, size: 40, color: Colors.black),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-              const SizedBox(width: 240),
-              IconButton(
-                icon: const Icon(
-                  Icons.add_shopping_cart_rounded,
-                  size: 30,
-                  color: Colors.black,
-                ),
-                onPressed: _onCloseSession,
+    return Scaffold(
+      backgroundColor: Colors.yellow[50],
+      appBar: AppBar(
+        centerTitle: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomCenter,
+              stops: const [0.3, 0.8],
+              colors: [
+                Color.fromARGB(197, 128, 185, 224),
+                Colors.green[700]!,
+              ],
+            ),
+          ),
+        ),
+        title: const Text(
+          '   Diprovet',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          const Icon(Icons.person, color: Colors.black),
+          const SizedBox(width: 5),
+          const Icon(Icons.notifications_none, color: Colors.black),
+          const SizedBox(width: 5),
+          PopupMenuButton(
+            icon: const Icon(Icons.menu, color: Colors.black),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 0,
+                onTap: _onCloseSession,
+                child: const Text('Cerrar sesión'),
               ),
             ],
           ),
-          const SizedBox(height: 30),
-          Expanded(
-            child: ListView.separated(
-              itemCount: categories.length,
-              itemBuilder: (context, index) => _CardHome(categories[index]),
-              separatorBuilder: (_, __) => const SizedBox(height: 30),
-            ),
+          const SizedBox(width: 20),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Hola $userName!',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Lottie.asset(
+                      'assets/lottie/horse_home.json',
+                      height: 35,
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(color: Colors.black12),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Categorias',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 550,
+                child: ListView.separated(
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) => _CardHome(categories[index]),
+                  separatorBuilder: (_, __) => const SizedBox(height: 30),
+                ),
+              ),
+              const SizedBox(height: 0),
+              const Divider(color: Colors.black12),
+            ],
           ),
         ],
       ),
@@ -127,7 +180,7 @@ class _CardHome extends StatelessWidget {
       children: [
         const _BackGroundWhite(),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 40),
+          padding: const EdgeInsets.only(left: 30, right: 30),
           child: Row(
             children: [
               Container(
@@ -137,7 +190,7 @@ class _CardHome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(90),
                 ),
                 child: ClipOval(
-                  child: Image.asset(
+                  child: Lottie.asset(
                     category.path,
                     fit: BoxFit.cover,
                   ),
@@ -148,10 +201,8 @@ class _CardHome extends StatelessWidget {
                   child: Text(
                     category.name,
                     style: const TextStyle(
-                      color: Colors.amber,
+                      color: Colors.black,
                       fontSize: 20,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -162,16 +213,16 @@ class _CardHome extends StatelessWidget {
                 width: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: Colors.yellow,
+                  color: Colors.blue[100],
                 ),
                 child: IconButton(
                   iconSize: 30,
                   icon: const Icon(Icons.chevron_right_outlined),
                   color: Colors.black,
                   onPressed: () {
-                    context.read<ProductsNotifier>().selectedCategory =
+                    context.read<ProductsProvider>().selectedCategory =
                         category.name;
-                    context.goNamed(ProductsScreen.routeName);
+                    context.goNamed(ProductsPage.routeName);
                   },
                 ),
               ),
@@ -189,8 +240,8 @@ class _BackGroundWhite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 110,
+      width: 320,
+      height: 100,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),

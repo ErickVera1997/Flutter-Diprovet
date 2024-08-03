@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/routes.dart';
-import 'package:flutter_diprovet_cliente/providers/products_provider.dart';
+import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        return ProductsNotifier(productService: ProductsService(Dio()));
+        return ProductsProvider(productService: ProductsService(Dio()));
       },
       builder: (context, child) => const MyAppWidget(),
     );

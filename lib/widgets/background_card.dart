@@ -7,11 +7,10 @@ class BackgroundCardProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 320,
-      height: 130,
+      height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(width: 3, color: Colors.black),
-        color: Colors.grey[50],
+        color: Colors.white,
       ),
     );
   }
