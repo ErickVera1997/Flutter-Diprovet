@@ -1,4 +1,4 @@
-import 'package:flutter_diprovet_cliente/models/product.dart';
+import 'package:flutter_diprovet_cliente/core/models/product.dart';
 
 class Detail {
   const Detail(this.amount, this.product);
@@ -15,5 +15,5 @@ class Detail {
     );
   }
 
-  double get total => product!.price! * amount!;
+  double get total => product!.price * amount!;
 }

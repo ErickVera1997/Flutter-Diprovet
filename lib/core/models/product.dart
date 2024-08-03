@@ -1,15 +1,15 @@
 class Product {
   Product({
-    this.available,
-    this.species,
-    this.name,
-    this.category,
-    this.picture,
-    this.price,
-    this.description,
-    this.details,
-    this.share,
-    this.id,
+    required this.available,
+    required this.species,
+    required this.name,
+    required this.category,
+    required this.picture,
+    required this.price,
+    required this.description,
+    required this.details,
+    required this.share,
+    required this.id,
   });
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
@@ -25,16 +25,16 @@ class Product {
         share: int.parse(json['share']?.toString() ?? ''),
       );
 
-  bool? available;
-  String? species;
-  int? share;
-  String? name;
-  String? category;
-  String? picture;
-  String? details;
-  String? description;
-  double? price;
-  String? id;
+  final bool available;
+  final String species;
+  final int share;
+  final String name;
+  final String category;
+  final String picture;
+  final String details;
+  final String description;
+  final double price;
+  final String id;
 
   Product copy() => Product(
         available: available,
