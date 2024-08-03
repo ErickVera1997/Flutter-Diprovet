@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_diprovet_cliente/models/category.dart';
-import 'package:flutter_diprovet_cliente/models/product.dart';
+import 'package:flutter_diprovet_cliente/core/models/category.dart';
+import 'package:flutter_diprovet_cliente/core/models/product.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
-class ProductsNotifier extends ChangeNotifier {
-  ProductsNotifier({required this.productService}) {
+class ProductsProvider extends ChangeNotifier {
+  ProductsProvider({required this.productService}) {
     loadProducts();
   }
   final ProductsService productService;
@@ -14,11 +14,11 @@ class ProductsNotifier extends ChangeNotifier {
   String _selectedCategory = 'Vitaminas';
 
   final List<Category> categories = [
-    const Category('Desparasitante', 'assets/home/desparasitante.jpeg'),
-    const Category('Vitaminas', 'assets/home/vitaminas.jpeg'),
-    const Category('Desinfectante', 'assets/home/desinfectante.jpeg'),
-    const Category('Antibiótico', 'assets/home/antibiotico.jpeg'),
-    const Category('Más', 'assets/logo.jpeg'),
+    const Category('Desparasitante', 'assets/lottie/home/disinfectant.json'),
+    const Category('Vitaminas', 'assets/lottie/home/vitamins.json'),
+    const Category('Desinfectante', 'assets/lottie/home/dewormer.json'),
+    const Category('Antibiótico', 'assets/lottie/home/antibiotic.json'),
+    const Category('Relacionados', 'assets/lottie/home/relacionados.json'),
   ];
 
   String get selectedCategory => _selectedCategory;

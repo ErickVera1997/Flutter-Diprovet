@@ -24,9 +24,27 @@ final router = GoRouter(
       builder: (context, state) => const HomePage(),
     ),
     GoRoute(
-      name: ProductsScreen.routeName,
-      path: '/${ProductsScreen.routeName}',
-      builder: (context, state) => const ProductsScreen(),
+      name: ProductsPage.routeName,
+      path: '/${ProductsPage.routeName}',
+      builder: (context, state) => const ProductsPage(),
+    ),
+    GoRoute(
+      name: DetailScreen.routeName,
+      path: '/${DetailScreen.routeName}',
+      builder: (context, state) {
+        final arg = state.extra! as DetailArg;
+
+        return DetailScreen(arg: arg);
+      },
+    ),
+    GoRoute(
+      name: ShoppingPage.routeName,
+      path: '/${ShoppingPage.routeName}',
+      builder: (context, state) {
+        final arg = state.extra! as ShoppingPageArg;
+
+        return ShoppingPage(arg: arg);
+      },
     ),
   ],
 );

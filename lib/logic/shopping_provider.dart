@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/core/models/product.dart';
+import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
 
-class DetailService extends ChangeNotifier {
+class ShoppingProvider extends ChangeNotifier {
   List<Detail> details = [];
 
   void addProduct(Product product) {
