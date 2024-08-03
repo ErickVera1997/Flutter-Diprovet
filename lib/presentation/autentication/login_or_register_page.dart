@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/login_body.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/resgister_body.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_icon_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/loading_overlay.dart';
-import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 enum LoginOrRegisterEnum { login, register }
@@ -23,8 +24,9 @@ class LoginOrRegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) =>
-          AuthenticationProvider(service: AuthenticationService()),
+      create: (context) => AuthenticationProvider(
+        service: AuthenticationService(),
+      ),
       builder: (context, child) => _LoginOrRegisterPageWidget(section),
     );
   }
@@ -49,7 +51,7 @@ class _LoginOrRegisterPageWidgetState
   void initState() {
     super.initState();
 
-    setState(() => _sectionSelected = widget.section);
+    _sectionSelected = widget.section;
   }
 
   @override
@@ -66,12 +68,16 @@ class _LoginOrRegisterPageWidgetState
           children: [
             Stack(
               children: [
-                Image.asset(
+                Center(
+                    child:
+                        Lottie.asset('assets/lottie/user.json', repeat: false))
+                /*Image.asset(
                   'assets/logo.jpeg',
-                  height: 260,
+                  height: 280,
                   width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                  fit: BoxFit.fill,
+                ),*/
+                ,
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
@@ -95,11 +101,11 @@ class _LoginOrRegisterPageWidgetState
                       _sectionSelected == LoginOrRegisterEnum.login
                           ? 'Iniciar Sesión'
                           : 'Registro',
-                      style: const TextStyle(fontSize: 25),
-                    ),
-                    const SizedBox(
-                      width: 200,
-                      child: Divider(color: Colors.yellowAccent),
+                      style: const TextStyle(
+                        fontSize: 25,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 30),
                     if (_sectionSelected == LoginOrRegisterEnum.login)

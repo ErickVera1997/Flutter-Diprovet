@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_diprovet_cliente/core/utils.dart';
+import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/home_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/email_input.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/password_input.dart';
-import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

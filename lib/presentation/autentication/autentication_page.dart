@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/login_or_register_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/screens.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
-import 'package:flutter_diprovet_cliente/providers/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -53,49 +53,59 @@ class _AuthenticatedPageStateWidget extends State<_AuthenticatedPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: _isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                children: [
-                  const SizedBox(height: 50),
-                  const Text(
-                    'DIPROVET',
-                    style: TextStyle(fontSize: 40),
-                  ),
-                  const SizedBox(height: 50),
-                  Center(
-                    child: Lottie.asset('assets/logo.json'),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      children: [
-                        BtnDiprovet(
-                          text: 'Iniciar sesión',
-                          onTap: () => context.pushNamed(
-                            LoginOrRegisterPage.routeName,
-                            extra: LoginOrRegisterEnum.login,
-                          ),
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Lottie.asset('assets/logo.json'),
+          ),
+          SafeArea(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      const Text(
+                        'DIPROVET',
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 5,
                         ),
-                        const SizedBox(height: 5),
-                        BtnDiprovet(
-                          text: 'Registrarme',
-                          btnColor: const Color(0xAA9B9C9D),
-                          onTap: () => context.pushNamed(
-                            LoginOrRegisterPage.routeName,
-                            extra: LoginOrRegisterEnum.register,
-                          ),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Column(
+                          children: [
+                            BtnDiprovet(
+                              text: 'Iniciar sesión',
+                              onTap: () => context.pushNamed(
+                                LoginOrRegisterPage.routeName,
+                                extra: LoginOrRegisterEnum.login,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            BtnDiprovet(
+                              text: 'Registrarme',
+                              btnColor: const Color(0xAA9B9C9D),
+                              onTap: () => context.pushNamed(
+                                LoginOrRegisterPage.routeName,
+                                extra: LoginOrRegisterEnum.register,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 15),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                ],
-              ),
+          ),
+        ],
       ),
     );
   }
