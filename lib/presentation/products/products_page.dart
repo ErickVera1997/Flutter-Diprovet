@@ -1,53 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:flutter_diprovet_cliente/presentation/home_page.dart';
-import 'package:flutter_diprovet_cliente/providers/products_provider.dart';
-import 'package:flutter_diprovet_cliente/services/details_service.dart';
+import 'package:flutter_diprovet_cliente/core/models/product.dart';
+import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
+import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
+import 'package:flutter_diprovet_cliente/presentation/screens.dart';
 import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
-import 'package:flutter_diprovet_cliente/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({Key? key}) : super(key: key);
+class ProductsPage extends StatelessWidget {
+  const ProductsPage({Key? key}) : super(key: key);
+
   static String routeName = 'products';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          const BackgroundYellow(),
-          _MenuCenter(),
-        ],
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => ShoppingProvider(),
+      child: const _ProductsPageWidget(),
     );
   }
 }
 
-class _MenuCenter extends StatelessWidget {
+class _ProductsPageWidget extends StatelessWidget {
+  const _ProductsPageWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final products = context.watch<ProductsNotifier>().filteredProducts;
+    final products = context.watch<ProductsProvider>().filteredProducts;
+    final details = context.watch<ShoppingProvider>().details;
+    final category =
+        products.isNotEmpty ? products.first.category : 'Categoría';
 
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue[100],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => context.goNamed(HomePage.routeName),
+        ),
+        centerTitle: true,
+        title: const Text(
+          'PRODUCTOS',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 4,
+          ),
+        ),
+        actions: [
           IconButton(
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.shopping_cart_outlined,
               color: Colors.black,
-              size: 40,
+              size: 30,
             ),
-            onPressed: () => context.goNamed(HomePage.routeName),
+            onPressed: () {
+              context.pushNamed(
+                ShoppingPage.routeName,
+                extra: ShoppingPageArg(details: details),
+              );
+            },
           ),
-          const SizedBox(height: 30),
-          Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (_, index) => _CardProducts(products[index]),
+        ],
+      ),
+      backgroundColor: Colors.yellow[50],
+      body: Stack(
+        children: [
+          Positioned(
+            //top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Lottie.asset('assets/lottie/dog_home.json'),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  Text(
+                    category,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (_, index) => _CardProducts(products[index]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -64,35 +118,30 @@ class _CardProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140,
-      width: 320,
+      height: 130,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          const SizedBox(width: 30),
           const BackgroundCardProduct(),
           Row(
             children: [
-              const SizedBox(width: 10),
               Container(
-                width: 130,
-                height: 122,
+                width: 100,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: GestureDetector(
-                  onTap: () {}
-                  /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => DetailScreen(product: product),
-                    ),
-                  ),*/
-                  ,
+                  onTap: () {
+                    context.pushNamed(
+                      DetailScreen.routeName,
+                      extra: DetailArg(product: product),
+                    );
+                  },
                   child: ClipOval(
                     child: FadeInImage(
                       placeholder: const AssetImage('assets/jar-loading.gif'),
-                      image: NetworkImage(product.picture!),
+                      image: NetworkImage(product.picture),
                       fit: BoxFit.cover,
                       imageErrorBuilder: (context, error, stackTrace) {
                         return Image.asset(
@@ -112,13 +161,11 @@ class _CardProducts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name ?? '',
+                      product.name,
                       style: const TextStyle(fontSize: 15, letterSpacing: 2),
                     ),
                     Text(
-                      product.available ?? false
-                          ? 'Product Stock'
-                          : 'Producto Agotado',
+                      product.available ? 'Product Stock' : 'Producto Agotado',
                       style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(height: 10),
@@ -151,14 +198,14 @@ class _CardProducts extends StatelessWidget {
               const SizedBox(width: 50),
               GestureDetector(
                 onTap: () {
-                  context.read<DetailService>().addProduct(product);
+                  context.read<ShoppingProvider>().addProduct(product);
                 },
                 child: Container(
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.yellow,
+                    color: Colors.green,
                   ),
                   child: const Icon(
                     Icons.add,
