@@ -5,34 +5,13 @@ import 'package:flutter_diprovet_cliente/presentation/products/products_page.dar
 import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
 import 'package:flutter_diprovet_cliente/widgets/cart_shopping.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-class ShoppingPageArg {
-  const ShoppingPageArg({
-    required this.details,
-  });
-
-  final List<Detail> details;
-}
-
 class ShoppingPage extends StatelessWidget {
-  const ShoppingPage({required this.arg, Key? key}) : super(key: key);
+  const ShoppingPage({Key? key}) : super(key: key);
 
   static String routeName = 'shopping';
-
-  final ShoppingPageArg arg;
-
-  @override
-  Widget build(BuildContext context) {
-    return _ShoppingPageWidget(details: arg.details);
-  }
-}
-
-class _ShoppingPageWidget extends StatelessWidget {
-  const _ShoppingPageWidget({required this.details, Key? key})
-      : super(key: key);
-
-  final List<Detail> details;
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +38,28 @@ class _ShoppingPageWidget extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.yellow[50],
-      body: ListView(
+      body: Stack(
         children: [
-          SizedBox(
-            height: 600,
-            child: ListView.builder(
-              itemCount: details.length,
-              itemBuilder: (context, index) => _Card(details[index]),
-            ),
+          Positioned(
+            right: 0,
+            left: 0,
+            child: Lottie.asset('assets/lottie/horse_home.json'),
+          ),
+          ListView(
+            children: [
+              Consumer<ShoppingProvider>(
+                builder: (context, shoppingProvider, child) {
+                  return SizedBox(
+                    height: 600,
+                    child: ListView.builder(
+                      itemCount: shoppingProvider.details.length,
+                      itemBuilder: (context, index) =>
+                          _Card(shoppingProvider.details[index]),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -80,30 +73,33 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      width: 385,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Nota de Pedido DIPROVET',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 130),
-          GestureDetector(
-            onTap: () => secondDetailPage(context),
-            child: Icon(
-              Icons.expand_less,
-              size: 30,
-              color: Colors.deepOrange[400],
+    return Padding(
+      padding: const EdgeInsets.only(left: 40),
+      child: Container(
+        height: 80,
+        decoration: BoxDecoration(
+          color: Colors.blue[100],
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Text(
+              'Nota de Pedido',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            IconButton(
+              icon: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(50)),
+                child: Lottie.asset(
+                  'assets/lottie/shopping.json',
+                  height: 50,
+                ),
+              ),
+              onPressed: () => secondDetailPage(context),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -116,107 +112,96 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 140,
-      width: 320,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          const BackgroundCardProduct(),
-          Positioned(
-            bottom: -5,
-            right: 90,
-            child: GestureDetector(
-              child: const Icon(
-                Icons.delete,
-                size: 35,
-                color: Colors.yellow,
-              ),
-              onTap: () => Provider.of<ShoppingProvider>(context, listen: false)
-                  .removeProduct(detail.product!),
-            ),
-          ),
-          Row(
-            children: [
-              const SizedBox(width: 10),
-              SizedBox(
-                width: 120,
-                height: 110,
-                child: ClipOval(
-                  child: Image.network(
-                    detail.product!.picture,
-                    fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.only(left: 20),
+      child: SizedBox(
+        height: 140,
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            const BackgroundCardProduct(),
+            // Positioned(
+            //   bottom: -5,
+            //   right: 90,
+            //   child: GestureDetector(
+            //     child: const Icon(
+            //       Icons.delete,
+            //       size: 35,
+            //       color: Colors.green,
+            //     ),
+            //     onTap: () =>
+            //         Provider.of<ShoppingProvider>(context, listen: false)
+            //             .removeProduct(detail.product!),
+            //   ),
+            // ),
+            Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: ClipOval(
+                    child: FadeInImage(
+                      placeholder: const AssetImage('assets/jar-loading.gif'),
+                      image: NetworkImage(detail.product!.picture),
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/logo.jpeg',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 5),
-              SizedBox(
-                width: 150,
-                height: 100,
-                //color: Colors.red,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      detail.product!.name,
-                      style: const TextStyle(fontSize: 18, letterSpacing: 2),
-                    ),
-                    const Text('Product Stock', style: TextStyle(fontSize: 12)),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.yellow, size: 15),
-                        const Icon(Icons.star, color: Colors.yellow, size: 15),
-                        const Icon(Icons.star, color: Colors.yellow, size: 15),
-                        const Icon(Icons.star, color: Colors.yellow, size: 15),
-                        Icon(
-                          Icons.star,
-                          color: Colors.blueGrey.shade100,
-                          size: 15,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(detail.product!.share.toString()),
-                        const Text('ml'),
-                        const SizedBox(width: 50),
-                        const Text(r'$'),
-                        Text(detail.product!.price.toString()),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ],
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 140,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        detail.product!.name,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '\$${detail.product!.price}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 60),
-              Container(
-                width: 40,
-                height: 110,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.yellow,
-                ),
-                child: _Counter(
-                  amount: detail.amount!,
-                  onIncrement: () {
-                    Provider.of<ShoppingProvider>(context, listen: false)
-                        .incrementAmount(detail);
-                  },
-                  onDecrement: () {
-                    if (detail.amount! > 0) {
+                const SizedBox(width: 20),
+                Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.green,
+                  ),
+                  child: _Counter(
+                    amount: detail.amount!,
+                    onIncrement: () {
                       Provider.of<ShoppingProvider>(context, listen: false)
-                          .decrementAmount(detail);
-                    }
-                  },
+                          .incrementAmount(detail);
+                    },
+                    onDecrement: () {
+                      if (detail.amount! > 0) {
+                        Provider.of<ShoppingProvider>(context, listen: false)
+                            .decrementAmount(detail);
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -236,8 +221,8 @@ class _Counter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
           onTap: onDecrement,

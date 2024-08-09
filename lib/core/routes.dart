@@ -40,11 +40,7 @@ final router = GoRouter(
     GoRoute(
       name: ShoppingPage.routeName,
       path: '/${ShoppingPage.routeName}',
-      builder: (context, state) {
-        final arg = state.extra! as ShoppingPageArg;
-
-        return ShoppingPage(arg: arg);
-      },
+      builder: (context, state) => const ShoppingPage(),
     ),
   ],
 );

@@ -2,15 +2,28 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
 import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 void secondDetailPage(BuildContext context) {
   final controller = ScreenshotController();
-  final product = Provider.of<ShoppingProvider>(context, listen: false);
+  final shoppingProvider =
+      Provider.of<ShoppingProvider>(context, listen: false);
+  Future<void> saveAndShareImage(Uint8List bytes) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final imagePath = '${directory.path}/flutter.png';
+    final image = File(imagePath);
+    await image.writeAsBytes(bytes);
+
+    const text = 'Shared from DIPROVET';
+
+    await Share.shareXFiles([XFile(imagePath)], text: text);
+  }
 
   Navigator.of(context).push(
     MaterialPageRoute<void>(
@@ -19,119 +32,101 @@ void secondDetailPage(BuildContext context) {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.blue[100],
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 30,
+              ),
+              onPressed: context.pop,
+            ),
             centerTitle: true,
-            backgroundColor: Colors.amber,
             title: const Text(
               'DIPROVET',
-              style: TextStyle(fontSize: 35),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 4,
+              ),
             ),
           ),
-          body: Column(
+          body: Stack(
             children: [
-              const SizedBox(
-                height: 30,
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Lottie.asset('assets/lottie/shopping.json'),
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              ListView(
                 children: [
-                  Text(
-                    'Producto',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    'Cantidad',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    'Precio',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(width: 20),
-                  Text(
-                    'Subtotales',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-              const Divider(
-                height: 5,
-                color: Colors.amber,
-              ),
-              const SizedBox(height: 30),
-              SizedBox(
-                width: 410,
-                height: 300,
-                child: ListView.separated(
-                  itemCount: product.details.length,
-                  itemBuilder: (context, index) =>
-                      _List(product.details[index]),
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Total de Compra =  ',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
-                        '\$',
-                        style: TextStyle(fontSize: 30),
+                      const SizedBox(height: 30),
+                      DataTable(
+                        columnSpacing: 15,
+                        columns: const [
+                          DataColumn(label: Text('Productos')),
+                          DataColumn(label: Text('Cantidad')),
+                          DataColumn(label: Text('Precio')),
+                          DataColumn(label: Text('Subtotales')),
+                        ],
+                        rows: shoppingProvider.details.map((detail) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Center(child: Text(detail.product!.name)),
+                              ),
+                              DataCell(
+                                Center(child: Text(detail.amount.toString())),
+                              ),
+                              DataCell(
+                                Center(
+                                  child: Text(
+                                    detail.product!.price.toStringAsFixed(2),
+                                  ),
+                                ),
+                              ),
+                              DataCell(
+                                Center(
+                                  child: Text(detail.total.toStringAsFixed(2)),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                        border: TableBorder.all(color: Colors.green),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(height: 20),
                       Text(
-                        product.totalProducts().toStringAsFixed(2),
-                        style: const TextStyle(fontSize: 25),
+                        'Total \$${shoppingProvider.totalProducts().toStringAsFixed(2)}',
+                        style: const TextStyle(fontSize: 20),
                       ),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final image = await controller.capture();
+                          if (image == null) return;
+                          await saveAndShareImage(image);
+                        },
+                        style: TextButton.styleFrom(
+                          fixedSize: const Size(250, 50),
+                          backgroundColor: Colors.green,
+                          shape: const StadiumBorder(),
+                        ),
+                        child: const Text(
+                          'Enviar nota de pedido',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                     ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 80),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(70),
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/logo.jpeg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final image = await controller.capture();
-                      if (image == null) return;
-                      await saveImage(image);
-                    },
-                    style: TextButton.styleFrom(
-                      fixedSize: const Size(270, 50),
-                      backgroundColor: Colors.amber,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: const Text(
-                      'Enviar nota de pedido',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        letterSpacing: 2,
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -141,37 +136,4 @@ void secondDetailPage(BuildContext context) {
       ),
     ),
   );
-}
-
-Future<void> saveImage(Uint8List bytes) async {
-  final directory = await getApplicationDocumentsDirectory();
-  final image = File('${directory.path}/flutter.png');
-  image.writeAsBytesSync(bytes);
-  const text = 'Shared from DIPROVET';
-  /* await Share.share(image.path, subject: text);*/
-}
-
-class _List extends StatelessWidget {
-  const _List(this.details);
-
-  final Detail details;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Text(
-          details.product!.name,
-          style: const TextStyle(color: Colors.amber),
-        ),
-        const SizedBox(width: 10),
-        Text(details.amount.toString()),
-        const SizedBox(width: 10),
-        Text(details.product!.price.toStringAsFixed(2)),
-        const SizedBox(width: 20),
-        Text(details.total.toStringAsFixed(2)),
-      ],
-    );
-  }
 }

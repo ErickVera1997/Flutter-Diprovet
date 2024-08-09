@@ -69,15 +69,11 @@ class _LoginOrRegisterPageWidgetState
             Stack(
               children: [
                 Center(
-                    child:
-                        Lottie.asset('assets/lottie/user.json', repeat: false))
-                /*Image.asset(
-                  'assets/logo.jpeg',
-                  height: 280,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                ),*/
-                ,
+                  child: Lottie.asset(
+                    'assets/lottie/user.json',
+                    repeat: false,
+                  ),
+                ),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),

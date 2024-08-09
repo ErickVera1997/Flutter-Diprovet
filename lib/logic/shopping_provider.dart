@@ -8,13 +8,13 @@ class ShoppingProvider extends ChangeNotifier {
 
   void addProduct(Product product) {
     final detail = details.firstWhereOrNull(
-      (element) => element.product?.id == product.id,
+      (element) => element.product?.name == product.name,
     );
 
     if (detail != null) {
       final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
       details
-        ..removeWhere((element) => element.product?.id == product.id)
+        ..removeWhere((element) => element.product?.name == product.name)
         ..add(detailUpdate);
     } else {
       details.add(Detail(1, product));
@@ -25,7 +25,7 @@ class ShoppingProvider extends ChangeNotifier {
 
   void incrementAmount(Detail detail) {
     final index = details.indexWhere(
-      (element) => element.product?.id == detail.product?.id,
+      (element) => element.product?.name == detail.product?.name,
     );
 
     if (index != -1) {
@@ -39,7 +39,7 @@ class ShoppingProvider extends ChangeNotifier {
 
   void decrementAmount(Detail detail) {
     final index = details.indexWhere(
-      (element) => element.product?.id == detail.product?.id,
+      (element) => element.product?.name == detail.product?.name,
     );
 
     if (index != -1) {
@@ -56,11 +56,11 @@ class ShoppingProvider extends ChangeNotifier {
   }
 
   void removeProduct(Product product) {
-    details.removeWhere((element) => element.product?.id == product.id);
+    details.removeWhere((element) => element.product?.name == product.name);
     notifyListeners();
   }
 
   double totalProducts() {
-    return details.fold(0.0, (sum, detail) => sum + detail.total);
+    return details.fold(0, (sum, detail) => sum + detail.total);
   }
 }

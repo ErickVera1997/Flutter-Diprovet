@@ -208,7 +208,6 @@ class _CardHome extends StatelessWidget {
                 ),
               ),
               Container(
-                alignment: Alignment.center,
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(

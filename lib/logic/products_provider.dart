@@ -15,9 +15,9 @@ class ProductsProvider extends ChangeNotifier {
 
   final List<Category> categories = [
     const Category('Desparasitante', 'assets/lottie/home/disinfectant.json'),
+    const Category('Antibiótico', 'assets/lottie/home/antibiotic.json'),
     const Category('Vitaminas', 'assets/lottie/home/vitamins.json'),
     const Category('Desinfectante', 'assets/lottie/home/dewormer.json'),
-    const Category('Antibiótico', 'assets/lottie/home/antibiotic.json'),
     const Category('Relacionados', 'assets/lottie/home/relacionados.json'),
   ];
 

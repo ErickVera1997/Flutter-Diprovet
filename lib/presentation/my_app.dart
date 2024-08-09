@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/routes.dart';
 import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
+import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
 import 'package:flutter_diprovet_cliente/services/products_service.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,10 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) {
-        return ProductsProvider(productService: ProductsService(Dio()));
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProductsProvider(
+            productService: ProductsService(Dio()),
+          ),
+        ),
+        ChangeNotifierProvider(create: (context) => ShoppingProvider()),
+      ],
       builder: (context, child) => const MyAppWidget(),
     );
   }

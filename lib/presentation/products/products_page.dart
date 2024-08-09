@@ -15,20 +15,8 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ShoppingProvider(),
-      child: const _ProductsPageWidget(),
-    );
-  }
-}
-
-class _ProductsPageWidget extends StatelessWidget {
-  const _ProductsPageWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     final products = context.watch<ProductsProvider>().filteredProducts;
-    final details = context.watch<ShoppingProvider>().details;
+
     final category =
         products.isNotEmpty ? products.first.category : 'Categoría';
 
@@ -63,7 +51,6 @@ class _ProductsPageWidget extends StatelessWidget {
             onPressed: () {
               context.pushNamed(
                 ShoppingPage.routeName,
-                extra: ShoppingPageArg(details: details),
               );
             },
           ),
@@ -195,12 +182,9 @@ class _CardProducts extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 50),
-              GestureDetector(
-                onTap: () {
-                  context.read<ShoppingProvider>().addProduct(product);
-                },
-                child: Container(
+              const SizedBox(width: 40),
+              IconButton(
+                icon: Container(
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
@@ -213,6 +197,9 @@ class _CardProducts extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                onPressed: () {
+                  context.read<ShoppingProvider>().addProduct(product);
+                },
               ),
             ],
           ),
