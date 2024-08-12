@@ -6,9 +6,9 @@ class PasswordInput extends StatefulWidget {
   const PasswordInput({
     required this.passwordController,
     required this.label,
-    Key? key,
+    super.key,
     this.validatePassword,
-  }) : super(key: key);
+  });
 
   final TextEditingController passwordController;
   final String label;

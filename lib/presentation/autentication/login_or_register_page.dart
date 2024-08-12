@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/login_body.dart';
-import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/resgister_body.dart';
+import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/register_body.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_icon_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/loading_overlay.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
@@ -14,8 +14,8 @@ enum LoginOrRegisterEnum { login, register }
 class LoginOrRegisterPage extends StatelessWidget {
   const LoginOrRegisterPage({
     required this.section,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static String routeName = 'login-or-register';
 
@@ -63,32 +63,29 @@ class _LoginOrRegisterPageWidgetState
     return Scaffold(
       body: LoadingOverlay(
         isLoading: isLoading,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Stack(
-              children: [
-                Center(
-                  child: Lottie.asset(
-                    'assets/lottie/user.json',
-                    repeat: false,
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Stack(
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      'assets/lottie/user.json',
+                      repeat: false,
+                    ),
                   ),
-                ),
-                SafeArea(
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: BtnIconDiprovet(
                       icon: Icons.arrow_back,
                       onTap: context.pop,
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            SafeArea(
-              top: false,
-              child: Padding(
+                ],
+              ),
+              const SizedBox(height: 20),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,8 +116,8 @@ class _LoginOrRegisterPageWidgetState
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

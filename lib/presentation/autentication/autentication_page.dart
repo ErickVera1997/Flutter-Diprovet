@@ -9,7 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class AuthenticationPage extends StatelessWidget {
-  const AuthenticationPage({Key? key}) : super(key: key);
+  const AuthenticationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,9 @@ class _AuthenticatedPageStateWidget extends State<_AuthenticatedPageWidget> {
           ),
           SafeArea(
             child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(
+                    child: CircularProgressIndicator(color: Colors.green),
+                  )
                 : Column(
                     children: [
                       const SizedBox(height: 50),

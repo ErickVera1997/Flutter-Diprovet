@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart' as slider;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/models/product.dart';
@@ -13,7 +14,7 @@ class DetailArg {
 }
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({required this.arg, Key? key}) : super(key: key);
+  const DetailScreen({required this.arg, super.key});
 
   static String routeName = 'products-details';
 
@@ -26,7 +27,7 @@ class DetailScreen extends StatelessWidget {
 }
 
 class DetailScreenWidget extends StatelessWidget {
-  const DetailScreenWidget({required this.product, Key? key}) : super(key: key);
+  const DetailScreenWidget({required this.product, super.key});
 
   final Product product;
 
@@ -47,7 +48,7 @@ class DetailScreenWidget extends StatelessWidget {
             color: Colors.black,
             size: 30,
           ),
-          onPressed: () => context.pop(),
+          onPressed: context.pop,
         ),
         centerTitle: true,
         title: Text(
@@ -158,6 +159,8 @@ class DetailScreenWidget extends StatelessWidget {
                 autoPlay: true,
                 viewportFraction: 1,
               ),
+              carouselController:
+                  slider.CarouselController() as CarouselControllerImpl,
             ),
             Padding(
               padding: const EdgeInsets.only(right: 25, left: 25),

@@ -4,10 +4,10 @@ class BtnDiprovet extends StatelessWidget {
   const BtnDiprovet({
     required this.text,
     required this.onTap,
-    Key? key,
+    super.key,
     this.btnColor,
     this.icon,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback onTap;

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_diprovet_cliente/core/utils.dart';
 
 class EmailInput extends StatelessWidget {
-  const EmailInput({required this.emailController, Key? key}) : super(key: key);
+  const EmailInput({required this.emailController, super.key});
 
   final TextEditingController emailController;
 

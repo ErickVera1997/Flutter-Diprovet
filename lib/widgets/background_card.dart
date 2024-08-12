@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BackgroundCardProduct extends StatelessWidget {
-  const BackgroundCardProduct({Key? key}) : super(key: key);
+  const BackgroundCardProduct({super.key});
 
   @override
   Widget build(BuildContext context) {

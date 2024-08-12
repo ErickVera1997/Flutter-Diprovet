@@ -10,7 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   static String routeName = 'home';
 
@@ -68,6 +68,7 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
     final userName = context.select<AuthenticationProvider, String>(
       (provider) => provider.user?.displayName ?? '',
     );
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Colors.yellow[50],
@@ -80,7 +81,7 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
               end: Alignment.bottomCenter,
               stops: const [0.3, 0.8],
               colors: [
-                Color.fromARGB(197, 128, 185, 224),
+                const Color.fromARGB(197, 128, 185, 224),
                 Colors.green[700]!,
               ],
             ),
@@ -151,14 +152,14 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 550,
+                height: height * 0.65,
                 child: ListView.separated(
                   itemCount: categories.length,
                   itemBuilder: (context, index) => _CardHome(categories[index]),
                   separatorBuilder: (_, __) => const SizedBox(height: 30),
                 ),
               ),
-              const SizedBox(height: 0),
+              const SizedBox(height: 20),
               const Divider(color: Colors.black12),
             ],
           ),

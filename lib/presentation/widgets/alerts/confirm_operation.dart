@@ -4,7 +4,7 @@ import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_outlin
 import 'package:go_router/go_router.dart';
 
 class ConfirmOperationAlert extends StatelessWidget {
-  const ConfirmOperationAlert({required this.text, Key? key}) : super(key: key);
+  const ConfirmOperationAlert({required this.text, super.key});
 
   final String text;
 
@@ -15,10 +15,10 @@ class ConfirmOperationAlert extends StatelessWidget {
         children: [
           Icon(
             Icons.notification_important_outlined,
-            color: Colors.orange,
+            color: Colors.green,
             size: 40,
           ),
-          Text('Alerta!', style: TextStyle(color: Colors.orange)),
+          Text('Alerta!', style: TextStyle(color: Colors.green)),
         ],
       ),
       content: Text(text),

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay({
     required this.child,
-    Key? key,
+    super.key,
     this.isLoading = false,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final bool isLoading;
@@ -24,7 +24,7 @@ class LoadingOverlay extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(color: Colors.black45),
               child: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.green),
               ),
             ),
           ),

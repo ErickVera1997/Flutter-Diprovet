@@ -9,7 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingPage extends StatelessWidget {
-  const ShoppingPage({Key? key}) : super(key: key);
+  const ShoppingPage({super.key});
 
   static String routeName = 'shopping';
 
@@ -166,7 +166,9 @@ class _Card extends StatelessWidget {
                       Text(
                         detail.product!.name,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Text(
@@ -212,8 +214,7 @@ class _Counter extends StatelessWidget {
     required this.amount,
     required this.onIncrement,
     required this.onDecrement,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final int amount;
   final VoidCallback onIncrement;

@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class LoginBody extends StatefulWidget {
-  const LoginBody({required this.onChangeSection, Key? key}) : super(key: key);
+  const LoginBody({required this.onChangeSection, super.key});
 
   final VoidCallback onChangeSection;
 

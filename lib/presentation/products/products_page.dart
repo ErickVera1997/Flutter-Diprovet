@@ -9,7 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({Key? key}) : super(key: key);
+  const ProductsPage({super.key});
 
   static String routeName = 'products';
 

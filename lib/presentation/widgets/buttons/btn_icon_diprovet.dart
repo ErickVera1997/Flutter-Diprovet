@@ -4,9 +4,9 @@ class BtnIconDiprovet extends StatelessWidget {
   const BtnIconDiprovet({
     required this.icon,
     required this.onTap,
-    Key? key,
+    super.key,
     this.btnColor,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback onTap;
