@@ -25,6 +25,8 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
+      case TargetPlatform.iOS:
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -49,9 +51,18 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB6BZ3a6nH5KDN4S_7D0Aflih1gQxz4lV4',
-    appId: '374136683037',
-    messagingSenderId: '1:374136683037:android:743832407d32de1323e4f4',
+    appId: '1:374136683037:android:743832407d32de1323e4f4',
+    messagingSenderId: '374136683037',
     projectId: 'flutter-varios-38eb4',
     storageBucket: 'flutter-varios-38eb4.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyB6BZ3a6nH5KDN4S_7D0Aflih1gQxz4lV4',
+    appId: '1:374136683037:ios:6905e3c097e2573123e4f4',
+    messagingSenderId: '374136683037',
+    projectId: 'flutter-varios-38eb4',
+    storageBucket: 'flutter-varios-38eb4.appspot.com',
+    iosBundleId: 'com.erickvera.diprovet',
   );
 }
