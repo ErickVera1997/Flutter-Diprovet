@@ -7,27 +7,27 @@ import 'package:flutter_diprovet_cliente/presentation/widgets/loading_overlay.da
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class DetailArg {
-  const DetailArg({required this.product});
+class ProductDetailPageArg {
+  const ProductDetailPageArg({required this.product});
 
   final Product product;
 }
 
-class DetailScreen extends StatelessWidget {
-  const DetailScreen({required this.arg, super.key});
+class ProductDetailPage extends StatelessWidget {
+  const ProductDetailPage({required this.arg, super.key});
 
   static String routeName = 'products-details';
 
-  final DetailArg arg;
+  final ProductDetailPageArg arg;
 
   @override
   Widget build(BuildContext context) {
-    return DetailScreenWidget(product: arg.product);
+    return _ProductDetailWidget(product: arg.product);
   }
 }
 
-class DetailScreenWidget extends StatelessWidget {
-  const DetailScreenWidget({required this.product, super.key});
+class _ProductDetailWidget extends StatelessWidget {
+  const _ProductDetailWidget({required this.product});
 
   final Product product;
 

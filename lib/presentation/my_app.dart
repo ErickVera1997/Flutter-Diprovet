@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => ShoppingProvider()),
       ],
-      builder: (context, child) => const MyAppWidget(),
+      builder: (context, child) => const _MyAppWidget(),
     );
   }
 }
 
-class MyAppWidget extends StatelessWidget {
-  const MyAppWidget({super.key});
+class _MyAppWidget extends StatelessWidget {
+  const _MyAppWidget();
 
   @override
   Widget build(BuildContext context) {

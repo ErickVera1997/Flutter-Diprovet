@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
 import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
-import 'package:flutter_diprovet_cliente/widgets/background_card.dart';
-import 'package:flutter_diprovet_cliente/widgets/cart_shopping.dart';
+import 'package:flutter_diprovet_cliente/presentation/shopping/cart_shopping_page.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/background_card.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -47,14 +47,18 @@ class ShoppingPage extends StatelessWidget {
           ),
           ListView(
             children: [
+              const SizedBox(height: 40),
               Consumer<ShoppingProvider>(
                 builder: (context, shoppingProvider, child) {
                   return SizedBox(
-                    height: 600,
-                    child: ListView.builder(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: ListView.separated(
                       itemCount: shoppingProvider.details.length,
-                      itemBuilder: (context, index) =>
-                          _Card(shoppingProvider.details[index]),
+                      itemBuilder: (context, index) => _Card(
+                        shoppingProvider.details[index],
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 30),
                     ),
                   );
                 },
@@ -96,7 +100,7 @@ class _Button extends StatelessWidget {
                   height: 50,
                 ),
               ),
-              onPressed: () => secondDetailPage(context),
+              onPressed: () => context.pushNamed(CartShoppingPage.routeName),
             ),
           ],
         ),
@@ -113,9 +117,8 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: SizedBox(
-        height: 140,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: SafeArea(
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
@@ -178,7 +181,7 @@ class _Card extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 20),
+                const Spacer(),
                 Container(
                   width: 100,
                   height: 40,

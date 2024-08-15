@@ -1,6 +1,7 @@
 import 'package:flutter_diprovet_cliente/presentation/autentication/autentication_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/login_or_register_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/screens.dart';
+import 'package:flutter_diprovet_cliente/presentation/shopping/cart_shopping_page.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -29,18 +30,23 @@ final router = GoRouter(
       builder: (context, state) => const ProductsPage(),
     ),
     GoRoute(
-      name: DetailScreen.routeName,
-      path: '/${DetailScreen.routeName}',
+      name: ProductDetailPage.routeName,
+      path: '/${ProductDetailPage.routeName}',
       builder: (context, state) {
-        final arg = state.extra! as DetailArg;
+        final arg = state.extra! as ProductDetailPageArg;
 
-        return DetailScreen(arg: arg);
+        return ProductDetailPage(arg: arg);
       },
     ),
     GoRoute(
       name: ShoppingPage.routeName,
       path: '/${ShoppingPage.routeName}',
       builder: (context, state) => const ShoppingPage(),
+    ),
+    GoRoute(
+      name: CartShoppingPage.routeName,
+      path: '/${CartShoppingPage.routeName}',
+      builder: (context, state) => const CartShoppingPage(),
     ),
   ],
 );

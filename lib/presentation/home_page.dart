@@ -4,6 +4,7 @@ import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/confirm_operation.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/background_card.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -151,12 +152,15 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
                 ),
               ),
               const SizedBox(height: 10),
-              SizedBox(
-                height: height * 0.65,
-                child: ListView.separated(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) => _CardHome(categories[index]),
-                  separatorBuilder: (_, __) => const SizedBox(height: 30),
+              SafeArea(
+                child: SizedBox(
+                  height: height * 0.65,
+                  child: ListView.separated(
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) =>
+                        _CardHome(categories[index]),
+                    separatorBuilder: (_, __) => const SizedBox(height: 30),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -179,10 +183,11 @@ class _CardHome extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        const _BackGroundWhite(),
+        const BackgroundCardProduct(),
         Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 width: 90,
@@ -197,14 +202,12 @@ class _CardHome extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    category.name,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
+              Center(
+                child: Text(
+                  category.name,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
                   ),
                 ),
               ),
@@ -230,22 +233,6 @@ class _CardHome extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _BackGroundWhite extends StatelessWidget {
-  const _BackGroundWhite();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 320,
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
     );
   }
 }
