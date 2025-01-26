@@ -4,6 +4,7 @@ import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/confirm_operation.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/error_alert.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/background_card.dart';
 import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
@@ -52,10 +53,10 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
     if (!mounted) return;
     response.fold(
       (errorMessage) {
-        /*showDialog<void>(
+        showDialog<void>(
           context: context,
           builder: (context) => ErrorAlert(text: errorMessage),
-        );*/
+        );
       },
       (unit) {
         context.go('/');
@@ -74,7 +75,7 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
     return Scaffold(
       backgroundColor: Colors.yellow[50],
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -88,21 +89,17 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
             ),
           ),
         ),
-        title: const Text(
-          '   Diprovet',
-          style: TextStyle(
-            color: Colors.white,
+        title: Text(
+          'Diprovet'.toUpperCase(),
+          style: const TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,
+            letterSpacing: 3,
           ),
         ),
         actions: [
-          const Icon(Icons.person, color: Colors.black),
-          const SizedBox(width: 5),
-          const Icon(Icons.notifications_none, color: Colors.black),
-          const SizedBox(width: 5),
           PopupMenuButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
+            icon: const Icon(Icons.logout, color: Colors.black),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 0,
@@ -126,7 +123,7 @@ class _HomePageWidgetState extends State<_HomePageWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Hola $userName!',
+                      'Hola $userName',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

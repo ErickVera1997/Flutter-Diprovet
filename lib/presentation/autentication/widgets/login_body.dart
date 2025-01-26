@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/home_page.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/error_alert.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/email_input.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/password_input.dart';
@@ -34,10 +35,10 @@ class _LoginBodyState extends State<LoginBody> {
     if (!mounted) return;
     response.fold(
       (errorMessage) {
-        /*  showDialog<void>(
-        context: context,
-        builder: (context) => ErrorAlert(text: errorMessage),
-      );*/
+        showDialog<void>(
+          context: context,
+          builder: (context) => ErrorAlert(text: errorMessage),
+        );
       },
       (unit) {
         context.goNamed(HomePage.routeName);

@@ -118,95 +118,86 @@ class _Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SafeArea(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            const BackgroundCardProduct(),
-            // Positioned(
-            //   bottom: -5,
-            //   right: 90,
-            //   child: GestureDetector(
-            //     child: const Icon(
-            //       Icons.delete,
-            //       size: 35,
-            //       color: Colors.green,
-            //     ),
-            //     onTap: () =>
-            //         Provider.of<ShoppingProvider>(context, listen: false)
-            //             .removeProduct(detail.product!),
-            //   ),
-            // ),
-            Row(
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          const BackgroundCardProduct(),
+          // Positioned(
+          //   bottom: -5,
+          //   right: 90,
+          //   child: GestureDetector(
+          //     child: const Icon(
+          //       Icons.delete,
+          //       size: 35,
+          //       color: Colors.green,
+          //     ),
+          //     onTap: () =>
+          //         Provider.of<ShoppingProvider>(context, listen: false)
+          //             .removeProduct(detail.product!),
+          //   ),
+          // ),
+          Row(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: ClipOval(
+                  child: FadeInImage(
+                    placeholder: const AssetImage('assets/jar-loading.gif'),
+                    image: NetworkImage(detail.product!.picture),
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/logo.jpeg',
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
-                  child: ClipOval(
-                    child: FadeInImage(
-                      placeholder: const AssetImage('assets/jar-loading.gif'),
-                      image: NetworkImage(detail.product!.picture),
-                      fit: BoxFit.cover,
-                      imageErrorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                          'assets/logo.jpeg',
-                          fit: BoxFit.cover,
-                        );
-                      },
+                ),
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    detail.product!.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  width: 140,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        detail.product!.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        '\$${detail.product!.price}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  const SizedBox(height: 10),
+                  Text(
+                    '\$${detail.product!.price}',
                   ),
+                ],
+              ),
+              const Spacer(),
+              Container(
+                width: 100,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.green,
                 ),
-                const Spacer(),
-                Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.green,
-                  ),
-                  child: _Counter(
-                    amount: detail.amount!,
-                    onIncrement: () {
-                      Provider.of<ShoppingProvider>(context, listen: false)
-                          .incrementAmount(detail);
-                    },
-                    onDecrement: () {
-                      if (detail.amount! > 0) {
-                        Provider.of<ShoppingProvider>(context, listen: false)
-                            .decrementAmount(detail);
-                      }
-                    },
-                  ),
+                child: _Counter(
+                  amount: detail.amount!,
+                  onIncrement: () {
+                    context.read<ShoppingProvider>().incrementAmount(detail);
+                  },
+                  onDecrement: () {
+                    if (detail.amount! > 0) {
+                      context.read<ShoppingProvider>().decrementAmount(detail);
+                    }
+                  },
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

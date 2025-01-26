@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_diprovet_cliente/core/utils.dart';
 
+const kValiEmailCharsRegExp = r"[a-zA-Z0-9.\-_@]";
+
 class EmailInput extends StatelessWidget {
   const EmailInput({required this.emailController, super.key});
 
@@ -33,9 +35,18 @@ class EmailInput extends StatelessWidget {
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp('[0-9@a-zA-Z.]')),
+        FilteringTextInputFormatter.singleLineFormatter,
+        FilteringTextInputFormatter.allow(RegExp(kValiEmailCharsRegExp)),
       ],
-      validator: _validateEmail,
+      validator: (value) {
+        final val = value?.trim() ?? '';
+
+        if (val.isEmpty) {
+          return 'Please enter your email';
+        }
+
+        return null;
+      },
       decoration: decoration(
         label: 'Email',
         icon: Icons.email_outlined,
