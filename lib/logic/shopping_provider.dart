@@ -1,66 +1,85 @@
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_diprovet_cliente/core/models/product.dart';
 import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
 
 class ShoppingProvider extends ChangeNotifier {
-  List<Detail> details = [];
+  final List<Detail> _details = [];
 
-  void addProduct(Product product) {
-    final detail = details.firstWhereOrNull(
-      (element) => element.product?.name == product.name,
-    );
+  List<Detail> get details => List.unmodifiable(_details);
 
-    if (detail != null) {
-      final detailUpdate = detail.copyWith(amount: (detail.amount ?? 0) + 1);
-      details
-        ..removeWhere((element) => element.product?.name == product.name)
-        ..add(detailUpdate);
+  int get productsCount =>
+      _details.fold(0, (sum, detail) => sum + detail.amount);
+
+  double get total => _details.fold(0, (sum, detail) => sum + detail.total);
+
+  bool contains(Product product) => _indexOf(product) != -1;
+
+  Detail? detailFor(Product product) {
+    final index = _indexOf(product);
+
+    return index == -1 ? null : _details[index];
+  }
+
+  void addProduct(Product product, {int quantity = 1}) {
+    if (quantity <= 0) return;
+
+    final index = _indexOf(product);
+    if (index == -1) {
+      _details.add(Detail(amount: quantity, product: product));
     } else {
-      details.add(Detail(1, product));
+      _details[index] = _details[index].copyWith(
+        amount: _details[index].amount + quantity,
+      );
     }
 
     notifyListeners();
   }
 
-  void incrementAmount(Detail detail) {
-    final index = details.indexWhere(
-      (element) => element.product?.name == detail.product?.name,
-    );
+  /// Reemplaza la cantidad de [product] en el carrito. Si [quantity] es menor
+  /// o igual a cero, el producto se elimina.
+  void setQuantity(Product product, int quantity) {
+    final index = _indexOf(product);
+    if (index == -1) {
+      if (quantity > 0) addProduct(product, quantity: quantity);
 
-    if (index != -1) {
-      final amountUpdate =
-          details[index].copyWith(amount: (detail.amount ?? 0) + 1);
-      details[index] = amountUpdate;
+      return;
+    }
+
+    if (quantity <= 0) {
+      _details.removeAt(index);
+    } else {
+      _details[index] = _details[index].copyWith(amount: quantity);
     }
 
     notifyListeners();
   }
 
-  void decrementAmount(Detail detail) {
-    final index = details.indexWhere(
-      (element) => element.product?.name == detail.product?.name,
-    );
+  void incrementAmount(Detail detail) =>
+      setQuantity(detail.product, detail.amount + 1);
 
-    if (index != -1) {
-      final amountUpdate =
-          details[index].copyWith(amount: (detail.amount ?? 0) - 1);
-      details[index] = amountUpdate;
-
-      if ((details[index].amount ?? 0) <= 0) {
-        details.removeAt(index);
-      }
-    }
-
-    notifyListeners();
-  }
+  void decrementAmount(Detail detail) =>
+      setQuantity(detail.product, detail.amount - 1);
 
   void removeProduct(Product product) {
-    details.removeWhere((element) => element.product?.name == product.name);
+    final index = _indexOf(product);
+    if (index == -1) return;
+
+    _details.removeAt(index);
     notifyListeners();
   }
 
-  double totalProducts() {
-    return details.fold(0, (sum, detail) => sum + detail.total);
+  void clear() {
+    if (_details.isEmpty) return;
+
+    _details.clear();
+    notifyListeners();
+  }
+
+  int _indexOf(Product product) {
+    return _details.indexWhere(
+      (detail) => product.id.isNotEmpty
+          ? detail.product.id == product.id
+          : detail.product.name == product.name,
+    );
   }
 }

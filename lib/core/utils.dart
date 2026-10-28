@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+final _currencyFormat = NumberFormat.currency(
+  locale: 'es_CO',
+  symbol: r'$',
+  decimalDigits: 2,
+);
+
+/// Formatea un valor monetario, por ejemplo `12500` -> `$ 12.500,00`.
+String formatCurrency(num value) => _currencyFormat.format(value);
 
 InputDecoration decoration({
   required String label,

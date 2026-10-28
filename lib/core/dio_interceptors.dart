@@ -16,9 +16,7 @@ class DioInterceptors {
 
           return handler.next(options);
         },
-        onResponse: (response, handler) async {
-          return handler.next(response);
-        },
+        onResponse: (response, handler) => handler.next(response),
       ),
     );
   }
