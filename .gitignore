@@ -31,6 +31,9 @@
 .pub/
 /build/
 
+# FVM (la versión se fija en .fvmrc)
+.fvm/
+
 # Web related
 lib/generated_plugin_registrant.dart
 
