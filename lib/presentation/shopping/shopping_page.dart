@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/models/shopping_detail.dart';
+import 'package:flutter_diprovet_cliente/core/utils.dart';
 import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
-import 'package:flutter_diprovet_cliente/presentation/products/products_page.dart';
+import 'package:flutter_diprovet_cliente/presentation/products/product_details_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/shopping/cart_shopping_page.dart';
-import 'package:flutter_diprovet_cliente/presentation/widgets/background_card.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -11,54 +11,44 @@ import 'package:provider/provider.dart';
 class ShoppingPage extends StatelessWidget {
   const ShoppingPage({super.key});
 
-  static String routeName = 'shopping';
+  static const String routeName = 'shopping';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue[100],
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 30,
-          ),
-          onPressed: () => context.goNamed(ProductsPage.routeName),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Shopping',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 4,
-          ),
-        ),
-      ),
-      backgroundColor: Colors.yellow[50],
       body: Stack(
         children: [
           Positioned(
             right: 0,
             left: 0,
-            child: Lottie.asset('assets/lottie/horse_home.json'),
+            child: Image.asset(
+              'assets/logo_one.png',
+            ),
           ),
           ListView(
             children: [
-              const SizedBox(height: 40),
               Consumer<ShoppingProvider>(
                 builder: (context, shoppingProvider, child) {
+                  final details = shoppingProvider.details;
+                  if (details.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 120),
+                      child: Center(
+                        child: Text(
+                          'Tu carrito está vacío',
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ),
+                    );
+                  }
+
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: ListView.separated(
-                      itemCount: shoppingProvider.details.length,
-                      itemBuilder: (context, index) => _Card(
-                        shoppingProvider.details[index],
-                      ),
+                      itemCount: details.length,
+                      itemBuilder: (context, index) => _Card(details[index]),
                       separatorBuilder: (context, index) =>
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 20),
                     ),
                   );
                 },
@@ -117,123 +107,120 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          const BackgroundCardProduct(),
-          // Positioned(
-          //   bottom: -5,
-          //   right: 90,
-          //   child: GestureDetector(
-          //     child: const Icon(
-          //       Icons.delete,
-          //       size: 35,
-          //       color: Colors.green,
-          //     ),
-          //     onTap: () =>
-          //         Provider.of<ShoppingProvider>(context, listen: false)
-          //             .removeProduct(detail.product!),
-          //   ),
-          // ),
-          Row(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: GestureDetector(
+        onTap: () {
+          context.pushNamed(
+            ProductDetailPage.routeName,
+            extra: ProductDetailPageArg(product: detail.product),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: 60,
+                height: 60,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: ClipOval(
-                  child: FadeInImage(
-                    placeholder: const AssetImage('assets/jar-loading.gif'),
-                    image: NetworkImage(detail.product!.picture),
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/logo.jpeg',
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  ),
-                ),
+                child: detail.product.picture.isNotEmpty
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: FadeInImage(
+                          placeholder:
+                              const AssetImage('assets/jar-loading.gif'),
+                          image: NetworkImage(detail.product.picture),
+                          fit: BoxFit.cover,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.image_not_supported,
+                              color: Colors.grey[400],
+                              size: 32,
+                            );
+                          },
+                        ),
+                      )
+                    : Icon(Icons.image, color: Colors.grey[300], size: 32),
               ),
-              const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    detail.product!.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      detail.product.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '\$${detail.product!.price}',
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Container(
-                width: 100,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.green,
+                    const SizedBox(height: 4),
+                    Text(
+                      formatCurrency(detail.product.price),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        color: Color(0xFF98B136),
+                      ),
+                    ),
+                  ],
                 ),
-                child: _Counter(
-                  amount: detail.amount!,
-                  onIncrement: () {
-                    context.read<ShoppingProvider>().incrementAmount(detail);
-                  },
-                  onDecrement: () {
-                    if (detail.amount! > 0) {
-                      context.read<ShoppingProvider>().decrementAmount(detail);
-                    }
-                  },
+              ),
+              const SizedBox(width: 8),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove, size: 18),
+                      onPressed: () {
+                        if (detail.amount > 0) {
+                          context
+                              .read<ShoppingProvider>()
+                              .decrementAmount(detail);
+                        }
+                      },
+                    ),
+                    Text(
+                      detail.amount.toString(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add, size: 18),
+                      onPressed: () {
+                        context
+                            .read<ShoppingProvider>()
+                            .incrementAmount(detail);
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
-    );
-  }
-}
-
-class _Counter extends StatelessWidget {
-  const _Counter({
-    required this.amount,
-    required this.onIncrement,
-    required this.onDecrement,
-  });
-
-  final int amount;
-  final VoidCallback onIncrement;
-  final VoidCallback onDecrement;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: onDecrement,
-          child: const Icon(Icons.remove, size: 30, color: Colors.white),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          amount.toString(),
-          style: const TextStyle(color: Colors.black, fontSize: 15),
-        ),
-        const SizedBox(height: 5),
-        GestureDetector(
-          onTap: onIncrement,
-          child: const Icon(Icons.add, size: 30, color: Colors.white),
-        ),
-      ],
     );
   }
 }

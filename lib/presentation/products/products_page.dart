@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/core/models/product.dart';
+import 'package:flutter_diprovet_cliente/core/utils.dart';
 import 'package:flutter_diprovet_cliente/logic/products_provider.dart';
 import 'package:flutter_diprovet_cliente/logic/shopping_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/screens.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
 
-  static String routeName = 'products';
+  static const String routeName = 'products';
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,6 @@ class ProductsPage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            //top: 0,
             bottom: 0,
             right: 0,
             left: 0,
@@ -155,7 +155,7 @@ class _CardProducts extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '\$${product.price}',
+                    formatCurrency(product.price),
                     style: const TextStyle(fontSize: 12),
                   ),
                 ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
-import 'package:go_router/go_router.dart';
 
 class ErrorAlert extends StatelessWidget {
   const ErrorAlert({required this.text, super.key});
@@ -18,7 +17,10 @@ class ErrorAlert extends StatelessWidget {
       ),
       content: Text(text),
       actions: [
-        BtnDiprovet(text: 'Cerrar', onTap: context.pop),
+        BtnDiprovet(
+          text: 'Cerrar',
+          onTap: () => Navigator.of(context).pop(),
+        ),
       ],
     );
   }

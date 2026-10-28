@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_outline_diprovet.dart';
-import 'package:go_router/go_router.dart';
 
 class ConfirmOperationAlert extends StatelessWidget {
   const ConfirmOperationAlert({required this.text, super.key});
@@ -14,8 +13,14 @@ class ConfirmOperationAlert extends StatelessWidget {
       title: const Text('Alerta!', style: TextStyle(color: Colors.green)),
       content: Text(text),
       actions: [
-        BtnDiprovet(text: 'Aceptar', onTap: () => context.pop(true)),
-        BtnOutlineDiprovet(text: 'Cancelar', onTap: () => context.pop(false)),
+        BtnDiprovet(
+          text: 'Aceptar',
+          onTap: () => Navigator.of(context).pop(true),
+        ),
+        BtnOutlineDiprovet(
+          text: 'Cancelar',
+          onTap: () => Navigator.of(context).pop(false),
+        ),
       ],
     );
   }
