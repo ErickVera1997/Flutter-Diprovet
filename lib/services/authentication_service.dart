@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class AuthenticationService extends ChangeNotifier {
+class AuthenticationService {
   User? get user => FirebaseAuth.instance.currentUser;
 
   Future<Either<String, Unit>> createUser({
@@ -11,27 +11,26 @@ class AuthenticationService extends ChangeNotifier {
     required String password,
   }) async {
     try {
-      final response =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      await response.user?.updateDisplayName(name);
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      try {
+        await credential.user?.updateDisplayName(name);
+      } on FirebaseAuthException catch (err) {
+        // El usuario ya fue creado; un fallo al guardar el nombre no debe
+        // invalidar el registro.
+        debugPrint('Error updating display name: $err');
+      }
 
       return right(unit);
     } on FirebaseAuthException catch (err) {
-      debugPrint(err.toString());
-      if (err.code == 'weak-password') {
-        return left('La contraseña proporcionada es demasiado débil.');
-      } else if (err.code == 'email-already-in-use') {
-        return left('El email ya se encuentra registrado.');
-      }
+      debugPrint('Error creating user: $err');
 
-      return left('Error inesperado.');
+      return left(_authErrorMessage(err));
     } catch (err) {
-      debugPrint(err.toString());
+      debugPrint('Unexpected error creating user: $err');
 
-      return left('Error inesperado.');
+      return left('Ocurrió un error inesperado. Inténtalo de nuevo.');
     }
   }
 
@@ -47,18 +46,13 @@ class AuthenticationService extends ChangeNotifier {
 
       return right(unit);
     } on FirebaseAuthException catch (err) {
-      debugPrint(err.toString());
-      if (err.code == 'user-not-found') {
-        return left('Email no encontrado.');
-      } else if (err.code == 'wrong-password') {
-        return left('Contraseña o usuario incorrectos.');
-      }
+      debugPrint('Error signing in: $err');
 
-      return left('Error inesperado.');
+      return left(_authErrorMessage(err));
     } catch (err) {
-      debugPrint(err.toString());
+      debugPrint('Unexpected error signing in: $err');
 
-      return left('Error inesperado.');
+      return left('Ocurrió un error inesperado. Inténtalo de nuevo.');
     }
   }
 
@@ -68,9 +62,35 @@ class AuthenticationService extends ChangeNotifier {
 
       return right(unit);
     } catch (err) {
-      debugPrint(err.toString());
+      debugPrint('Error signing out: $err');
 
-      return left('Error inesperado.');
+      return left('No se pudo cerrar la sesión. Inténtalo de nuevo.');
+    }
+  }
+
+  String _authErrorMessage(FirebaseAuthException err) {
+    switch (err.code) {
+      case 'weak-password':
+        return 'La contraseña proporcionada es demasiado débil.';
+      case 'email-already-in-use':
+        return 'El correo ya se encuentra registrado.';
+      case 'invalid-email':
+        return 'El correo electrónico no es válido.';
+      case 'user-not-found':
+      case 'wrong-password':
+      case 'invalid-credential':
+        return 'Correo o contraseña incorrectos.';
+      case 'user-disabled':
+        return 'Esta cuenta se encuentra deshabilitada.';
+      case 'too-many-requests':
+        return 'Demasiados intentos fallidos. Inténtalo más tarde.';
+      case 'network-request-failed':
+        return 'No se pudo conectar con el servidor. '
+            'Verifica tu conexión a internet.';
+      case 'operation-not-allowed':
+        return 'El inicio de sesión con correo no está habilitado.';
+      default:
+        return 'Ocurrió un error inesperado. Inténtalo de nuevo.';
     }
   }
 }

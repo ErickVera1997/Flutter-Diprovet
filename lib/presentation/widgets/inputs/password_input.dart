@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_diprovet_cliente/core/utils.dart';
 
 class PasswordInput extends StatefulWidget {
@@ -8,11 +7,13 @@ class PasswordInput extends StatefulWidget {
     required this.label,
     super.key,
     this.validatePassword,
+    this.textInputAction = TextInputAction.next,
   });
 
   final TextEditingController passwordController;
   final String label;
   final String? validatePassword;
+  final TextInputAction textInputAction;
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -28,25 +29,21 @@ class _PasswordInputState extends State<PasswordInput> {
       controller: widget.passwordController,
       obscureText: _isObscured,
       cursorColor: Colors.black,
-      textInputAction: TextInputAction.next,
+      autocorrect: false,
+      enableSuggestions: false,
+      textInputAction: widget.textInputAction,
       keyboardType: TextInputType.visiblePassword,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp('[a-z A-Z á-ú Á-Ú 0-9 ]')),
-        FilteringTextInputFormatter.deny(' '),
-      ],
       validator: (value) {
-        if (value?.isEmpty ?? true) {
-          return 'Campo requerido';
-        }
+        if (value == null || value.isEmpty) return 'Campo requerido';
 
-        if (value!.length < 6) {
+        // Firebase exige al menos 6 caracteres.
+        if (value.length < 6) {
           return 'La contraseña debe tener mínimo 6 caracteres';
         }
 
-        if (widget.validatePassword != null) {
-          if (value != widget.validatePassword) {
-            return 'La contraseña no coincide';
-          }
+        final validatePassword = widget.validatePassword;
+        if (validatePassword != null && value != validatePassword) {
+          return 'La contraseña no coincide';
         }
 
         return null;

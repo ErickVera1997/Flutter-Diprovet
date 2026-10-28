@@ -3,23 +3,14 @@ import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/autentication/login_or_register_page.dart';
 import 'package:flutter_diprovet_cliente/presentation/screens.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
-import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) {
-        return AuthenticationProvider(service: AuthenticationService());
-      },
-      builder: (context, child) => const _AuthenticatedPageWidget(),
-    );
-  }
+  Widget build(BuildContext context) => const _AuthenticatedPageWidget();
 }
 
 class _AuthenticatedPageWidget extends StatefulWidget {
@@ -35,8 +26,9 @@ class _AuthenticatedPageStateWidget extends State<_AuthenticatedPageWidget> {
   bool _isLoading = true;
 
   Future<void> _navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 2500), () {});
+    await Future<void>.delayed(const Duration(milliseconds: 1200));
     if (!mounted) return;
+
     final user = context.read<AuthenticationProvider>().user;
     setState(() => _isLoading = false);
     if (user != null) {
@@ -60,7 +52,12 @@ class _AuthenticatedPageStateWidget extends State<_AuthenticatedPageWidget> {
             bottom: 0,
             right: 0,
             left: 0,
-            child: Lottie.asset('assets/logo.json'),
+            child: Image.asset(
+              'assets/logo_one.png',
+              fit: BoxFit.none,
+              height: 100,
+              width: 100,
+            ),
           ),
           SafeArea(
             child: _isLoading
@@ -73,10 +70,9 @@ class _AuthenticatedPageStateWidget extends State<_AuthenticatedPageWidget> {
                       const Text(
                         'DIPROVET',
                         style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.green,
+                          fontSize: 50,
+                          color: Color(0xFF98B136),
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 5,
                         ),
                       ),
                       const Spacer(),

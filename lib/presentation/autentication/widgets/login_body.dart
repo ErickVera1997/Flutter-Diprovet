@@ -29,7 +29,7 @@ class _LoginBodyState extends State<LoginBody> {
 
     final response = await context.read<AuthenticationProvider>().signInUser(
           email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
+          password: _passwordController.text,
         );
 
     if (!mounted) return;

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_diprovet_cliente/core/utils.dart';
 import 'package:flutter_diprovet_cliente/logic/authentication_provider.dart';
 import 'package:flutter_diprovet_cliente/presentation/home_page.dart';
+import 'package:flutter_diprovet_cliente/presentation/widgets/alerts/error_alert.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/email_input.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/inputs/password_input.dart';
@@ -22,7 +23,6 @@ class _RegisterBodyState extends State<RegisterBody> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -33,16 +33,16 @@ class _RegisterBodyState extends State<RegisterBody> {
     final response = await context.read<AuthenticationProvider>().createUser(
           name: _nameController.text.trim(),
           email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
+          password: _passwordController.text,
         );
 
     if (!mounted) return;
     response.fold(
       (errorMessage) {
-        /*showDialog<void>(
-        context: context,
-        builder: (context) => ErrorAlert(text: errorMessage),
-      );*/
+        showDialog<void>(
+          context: context,
+          builder: (context) => ErrorAlert(text: errorMessage),
+        );
       },
       (unit) {
         context.goNamed(HomePage.routeName);
@@ -54,7 +54,6 @@ class _RegisterBodyState extends State<RegisterBody> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -91,26 +90,6 @@ class _RegisterBodyState extends State<RegisterBody> {
           const SizedBox(height: 5),
           EmailInput(emailController: _emailController),
           const SizedBox(height: 5),
-          TextFormField(
-            maxLength: 10,
-            controller: _phoneController,
-            cursorColor: Colors.black,
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-            ],
-            validator: (value) {
-              if (value?.isEmpty ?? true) return 'Campo requerido';
-
-              return null;
-            },
-            decoration: decoration(
-              label: 'Teléfono',
-              icon: Icons.phone_android,
-            ),
-          ),
-          const SizedBox(height: 5),
           PasswordInput(
             passwordController: _passwordController,
             label: 'Contraseña',
@@ -123,6 +102,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                 validatePassword: value.text,
                 passwordController: _confirmPasswordController,
                 label: 'Confirmar contraseña',
+                textInputAction: TextInputAction.done,
               );
             },
           ),

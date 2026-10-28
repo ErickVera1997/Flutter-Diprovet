@@ -4,7 +4,6 @@ import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/logi
 import 'package:flutter_diprovet_cliente/presentation/autentication/widgets/register_body.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/buttons/btn_icon_diprovet.dart';
 import 'package:flutter_diprovet_cliente/presentation/widgets/loading_overlay.dart';
-import 'package:flutter_diprovet_cliente/services/authentication_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -17,18 +16,13 @@ class LoginOrRegisterPage extends StatelessWidget {
     super.key,
   });
 
-  static String routeName = 'login-or-register';
+  static const String routeName = 'login-or-register';
 
   final LoginOrRegisterEnum section;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthenticationProvider(
-        service: AuthenticationService(),
-      ),
-      builder: (context, child) => _LoginOrRegisterPageWidget(section),
-    );
+    return _LoginOrRegisterPageWidget(section);
   }
 }
 
