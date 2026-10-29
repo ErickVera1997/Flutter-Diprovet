@@ -1,61 +1,53 @@
-import 'dart:convert';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_diprovet_cliente/models/category.dart';
-import 'package:flutter_diprovet_cliente/models/product.dart';
-import 'package:http/http.dart' as http;
+class ProductsService {
+  ProductsService(this.dioClient);
 
-class ProductsService extends ChangeNotifier {
-  final String _baseUrl = 'flutter-varios-38eb4-default-rtdb.firebaseio.com';
-  List<Product> products = [];
-  String _selectedCategory = 'Vitaminas';
-  bool isLoading = false;
-  bool isSaving = true;
+  static const _productsUrl =
+      'https://flutter-varios-38eb4-default-rtdb.firebaseio.com/products.json';
 
-  List<Category> categories = [
-    Category('Desparasitante', 'assets/home/desparasitante.jpeg'),
-    Category('Vitaminas', 'assets/home/vitaminas.jpeg'),
-    Category('Desinfectante', 'assets/home/desinfectante.jpeg'),
-    Category('Antibiótico', 'assets/home/antibiotico.jpeg'),
-    Category('Más', 'assets/logo.jpeg'),
-  ];
+  final Dio dioClient;
 
-  List<Product> filteredProducts = [];
+  Future<Either<String, List<Map<String, dynamic>>>> fetchProducts() async {
+    try {
+      final response = await dioClient.get<Map<String, dynamic>>(_productsUrl);
+      final data = response.data ?? const <String, dynamic>{};
+      final products = <Map<String, dynamic>>[];
 
-  ProductsService() {
-    loadProducts();
-  }
-
-  String get selectedCategory => _selectedCategory;
-  set selectedCategory(String valor) {
-    _selectedCategory = valor;
-    filtersProducts(valor);
-    notifyListeners();
-  }
-
-  loadProducts() async {
-    isLoading = true;
-    notifyListeners();
-
-    final url = Uri.https(_baseUrl, 'products.json');
-    final resp = await http.get(url);
-    final Map<String, dynamic> productsMap = json.decode(resp.body);
-    productsMap.forEach((key, value) {
-      final tempProdut = Product.fromMap(value);
-      tempProdut.id = key;
-      products.add(tempProdut);
-    });
-    isLoading = false;
-    notifyListeners();
-  }
-
-  filtersProducts(String category) {
-    filteredProducts.clear();
-    for (var item in products) {
-      if (item.category == category) {
-        filteredProducts.add(item);
-        notifyListeners();
+      for (final value in data.values) {
+        if (value is Map) {
+          products.add(Map<String, dynamic>.from(value));
+        }
       }
+
+      return right(products);
+    } on DioException catch (err) {
+      debugPrint('Error fetching products: $err');
+
+      return left(_messageFor(err));
+    } catch (err) {
+      debugPrint('Unexpected error fetching products: $err');
+
+      return left('Ocurrió un error inesperado. Inténtalo de nuevo.');
+    }
+  }
+
+  String _messageFor(DioException err) {
+    switch (err.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.connectionError:
+        return 'No se pudo conectar con el servidor. '
+            'Verifica tu conexión a internet.';
+      case DioExceptionType.badResponse:
+        return 'El servidor respondió con un error. Inténtalo más tarde.';
+      case DioExceptionType.cancel:
+      case DioExceptionType.badCertificate:
+      case DioExceptionType.unknown:
+        return 'No se pudieron cargar los productos. Inténtalo de nuevo.';
     }
   }
 }
